@@ -20,7 +20,7 @@ public class BatchHelper {
 
     public static Batch getBatch(String recipeName) {
         Recipe recipe = Recipes.RECIPES.get(recipeName);
-        Batch batch = new Batch(batchId.getAndIncrement(), recipe, BrewStep.PREPARE, 0);
+        Batch batch = new Batch(batchId.getAndIncrement(), recipe, BrewStep.TO_BREW, 0);
         logger.debug(String.format("Created new batch: %s", batch));
         return batch;
     }

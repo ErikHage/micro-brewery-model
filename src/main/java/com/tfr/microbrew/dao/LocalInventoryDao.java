@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -29,6 +31,13 @@ public class LocalInventoryDao implements InventoryDao {
     @Override
     public void create(InventoryItem inventoryItem) {
         INVENTORY.put(inventoryItem.getName(), inventoryItem);
+    }
+
+    @Override
+    public Set<InventoryItem> readAll() {
+        return INVENTORY.entrySet().stream()
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toSet());
     }
 
     @Override

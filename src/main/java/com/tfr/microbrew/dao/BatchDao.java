@@ -15,6 +15,7 @@ public interface BatchDao {
     Set<Batch> readAll();
     Set<Batch> readByStep(BrewStep brewStep);
     Set<Batch> readByRecipe(String recipeName);
+    Set<Batch> readByRecipeAndStep(String recipe, BrewStep brewStep);
     void update(Batch batch);
     void delete(Batch batch);
 

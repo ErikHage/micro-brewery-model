@@ -3,6 +3,8 @@ package com.tfr.microbrew.service;
 import com.tfr.microbrew.exception.InventoryException;
 import com.tfr.microbrew.model.InventoryItem;
 
+import java.util.Set;
+
 /**
  * Service layer for Inventory interaction
  *
@@ -12,7 +14,10 @@ public interface InventoryService {
 
     void addItem(InventoryItem inventoryItem) throws InventoryException;
 
+    Set<InventoryItem> getInventory();
+
     InventoryItem getItemByName(String name);
+    boolean doesItemExist(String name);
     double getCurrentQuantity(String name);
 
     void updateItem(InventoryItem inventoryItem);

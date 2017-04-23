@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 /**
  *
  *
@@ -35,16 +37,28 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    public Set<InventoryItem> getInventory() {
+        return inventoryDao.readAll();
+    }
+
+    @Override
     public InventoryItem getItemByName(String name) {
-        logger.debug(String.format("Looking up item: %s", name));
+//        logger.debug(String.format("Looking up item: %s", name));
         return inventoryDao.readByName(name);
     }
 
     @Override
+    public boolean doesItemExist(String name) {
+        return getItemByName(name) != null;
+    }
+
+    @Override
     public double getCurrentQuantity(String name) {
-        logger.debug(String.format("Looking up current quantity for item: %s", name));
-        InventoryItem inventoryItem = getItemByName(name);
-        if(inventoryItem == null) {
+//        logger.debug(String.format("Looking up current quantity for item: %s", name));
+        InventoryItem inventoryItem;
+        try {
+            inventoryItem = getItemByName(name);
+        } catch (InventoryException ex) {
             return 0.0;
         }
         return inventoryItem.getQuantity();

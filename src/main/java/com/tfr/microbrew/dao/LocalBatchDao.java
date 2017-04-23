@@ -52,6 +52,15 @@ public class LocalBatchDao implements BatchDao {
     }
 
     @Override
+    public Set<Batch> readByRecipeAndStep(String recipeName, BrewStep brewStep) {
+        return IN_PROGRESS_BATCHES.entrySet().stream()
+                .filter(e -> e.getValue().getRecipe().getName().equals(recipeName))
+                .filter(e -> e.getValue().getCurrentStep().equals(brewStep))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
     public void update(Batch batch) {
         IN_PROGRESS_BATCHES.put(batch.getBatchId(), batch);
     }

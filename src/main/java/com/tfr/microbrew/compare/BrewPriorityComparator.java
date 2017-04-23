@@ -1,5 +1,6 @@
 package com.tfr.microbrew.compare;
 
+import com.tfr.microbrew.model.Batch;
 import com.tfr.microbrew.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,19 +14,19 @@ import java.util.Comparator;
  * Created by Erik on 4/22/2017.
  */
 @Component("BatchPriorityComparator")
-public class BatchPriorityComparator implements Comparator<String> {
+public class BrewPriorityComparator implements Comparator<Batch> {
 
     private final InventoryService inventoryService;
 
     @Autowired
-    public BatchPriorityComparator(InventoryService inventoryService) {
+    public BrewPriorityComparator(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
     }
 
     @Override
-    public int compare(String b1, String b2) {
-        double b1Quantity = inventoryService.getCurrentQuantity(b1);
-        double b2Quantity = inventoryService.getCurrentQuantity(b2);
+    public int compare(Batch b1, Batch b2) {
+        double b1Quantity = inventoryService.getCurrentQuantity(b1.getRecipe().getName());
+        double b2Quantity = inventoryService.getCurrentQuantity(b2.getRecipe().getName());
 
         if(b1Quantity > b2Quantity) {
             return 1;

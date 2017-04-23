@@ -7,9 +7,9 @@ package com.tfr.microbrew.config;
  */
 public enum BrewStep {
 
-    PREPARE,
-    BREW,
+    TO_BREW,
     FERMENT,
-    CARBONATE;
+    CARBONATE,
+    PACKAGE;
 
 }

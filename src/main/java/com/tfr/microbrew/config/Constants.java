@@ -25,12 +25,16 @@ public interface Constants {
             RecipeNames.CHECKS_AND_BALANCES_IPA,
             RecipeNames.ROSIES_RED_ALE,
             RecipeNames.COLD_BREW_COFEE_PORTER,
-            RecipeNames.TRIPPLECANOE_AND_TYLER_TOO
+            RecipeNames.TRIPPLECANOE_AND_TYLER_TOO,
+            RecipeNames.WIT_OF_THEIR_EYES,
+            RecipeNames.AMBER_WAVES_OF_GRAIN,
+            RecipeNames.SUMMER_SMASH_IPA
+
     );
 
     interface BrewHouse {
         double BATCH_SIZE = 93.0;
-        int FERMENETERS = 8;
+        int FERMENTERS = 8;
         int CARBONATION_VESSELS = 2;
     }
 
