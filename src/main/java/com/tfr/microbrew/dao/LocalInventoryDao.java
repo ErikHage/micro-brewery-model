@@ -1,5 +1,6 @@
 package com.tfr.microbrew.dao;
 
+import com.tfr.microbrew.config.InventoryConfig;
 import com.tfr.microbrew.model.InventoryItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  *
@@ -19,6 +21,10 @@ public class LocalInventoryDao implements InventoryDao {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private static final Map<String, InventoryItem> INVENTORY = new HashMap<>();
+
+    public LocalInventoryDao() {
+        InventoryConfig.DEFAULT_ITEMS.forEach(item -> INVENTORY.put(item.getName(), item));
+    }
 
     @Override
     public void create(InventoryItem inventoryItem) {

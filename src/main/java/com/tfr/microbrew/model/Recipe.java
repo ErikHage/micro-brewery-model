@@ -1,5 +1,7 @@
 package com.tfr.microbrew.model;
 
+import java.util.List;
+
 /**
  *
  *
@@ -10,12 +12,16 @@ public class Recipe {
     private String name;
     private double volume;
 
+    private List<RecipeIngredient> ingredients;
+
     private long fermentationDays;
     private long carbonationDays;
 
-    public Recipe(String name, double volume, long fermentationDays, long carbonationDays) {
+    public Recipe(String name, double volume, List<RecipeIngredient> ingredients,
+                  long fermentationDays, long carbonationDays) {
         this.name = name;
         this.volume = volume;
+        this.ingredients = ingredients;
         this.fermentationDays = fermentationDays;
         this.carbonationDays = carbonationDays;
     }
@@ -40,6 +46,7 @@ public class Recipe {
         return "Recipe{" +
                 "name='" + name + '\'' +
                 ", volume=" + volume +
+                ", ingredients=" + ingredients +
                 ", fermentationDays=" + fermentationDays +
                 ", carbonationDays=" + carbonationDays +
                 '}';
@@ -59,6 +66,14 @@ public class Recipe {
 
     public void setVolume(double volume) {
         this.volume = volume;
+    }
+
+    public List<RecipeIngredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<RecipeIngredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public long getFermentationDays() {

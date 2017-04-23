@@ -1,12 +1,14 @@
 package com.tfr.microbrew.config;
 
+import com.google.common.collect.Lists;
 import com.tfr.microbrew.model.Recipe;
+import com.tfr.microbrew.model.RecipeIngredient;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.tfr.microbrew.config.Constants.BrewHouse.BATCH_SIZE;
-import static com.tfr.microbrew.config.Constants.RecipeNames.*;
+import static com.tfr.microbrew.config.Constants.*;
 
 /**
  *
@@ -15,14 +17,86 @@ import static com.tfr.microbrew.config.Constants.RecipeNames.*;
  */
 public interface Recipes {
 
+    Recipe CHECKS_AND_BALANCES_IPA = new Recipe(
+            RecipeNames.CHECKS_AND_BALANCES_IPA,
+            BATCH_SIZE,
+            Lists.newArrayList(
+                    new RecipeIngredient("", 10.0)
+            ),
+            7,
+            2
+    );
+
+    Recipe ROSIES_RED_ALE = new Recipe(
+            RecipeNames.ROSIES_RED_ALE,
+            BATCH_SIZE,
+            Lists.newArrayList(
+                    new RecipeIngredient("", 10.0)
+            ),
+            7,
+            2
+    );
+
+    Recipe COLD_BREW_COFEE_PORTER = new Recipe(
+            RecipeNames.COLD_BREW_COFEE_PORTER,
+            BATCH_SIZE,
+            Lists.newArrayList(
+                    new RecipeIngredient("", 10.0)
+            ),
+            10,
+            1
+    );
+
+    Recipe TRIPPLECANOE_AND_TYLER_TOO = new Recipe(
+            RecipeNames.TRIPPLECANOE_AND_TYLER_TOO,
+            BATCH_SIZE,
+            Lists.newArrayList(
+                    new RecipeIngredient("", 10.0)
+            ),
+            12,
+            2
+    );
+
+    Recipe WIT_OF_THEIR_EYES = new Recipe(
+            RecipeNames.WIT_OF_THEIR_EYES,
+            BATCH_SIZE,
+            Lists.newArrayList(
+                    new RecipeIngredient("", 10.0)
+            ),
+            5,
+            2
+    );
+
+
+    Recipe AMBER_WAVES_OF_GRAIN = new Recipe(
+            RecipeNames.AMBER_WAVES_OF_GRAIN,
+            BATCH_SIZE,
+            Lists.newArrayList(
+                    new RecipeIngredient("", 10.0)
+            ),
+            7,
+            2
+    );
+
+
+    Recipe SUMMER_SMASH_IPA = new Recipe(
+            RecipeNames.SUMMER_SMASH_IPA,
+            BATCH_SIZE,
+            Lists.newArrayList(
+                    new RecipeIngredient("", 10.0)
+            ),
+            7,
+            2
+    );
+
     Map<String, Recipe> RECIPES = new HashMap<String, Recipe>() {{
-        put(CHECKS_AND_BALANCES_IPA, new Recipe(CHECKS_AND_BALANCES_IPA, BATCH_SIZE, 7, 2));
-        put(ROSIES_RED_ALE, new Recipe(ROSIES_RED_ALE, BATCH_SIZE, 7, 2));
-        put(COLD_BREW_COFEE_PORTER, new Recipe(COLD_BREW_COFEE_PORTER, BATCH_SIZE, 10, 1));
-        put(TRIPPLECANOE_AND_TYLER_TOO, new Recipe(TRIPPLECANOE_AND_TYLER_TOO, BATCH_SIZE, 12, 2));
-        put(WIT_OF_THEIR_EYES, new Recipe(WIT_OF_THEIR_EYES, BATCH_SIZE, 5, 2));
-        put(AMBER_WAVES_OF_GRAIN, new Recipe(AMBER_WAVES_OF_GRAIN, BATCH_SIZE, 7, 2));
-        put(SUMMER_SMASH_IPA, new Recipe(SUMMER_SMASH_IPA, BATCH_SIZE, 7, 2));
+        put(CHECKS_AND_BALANCES_IPA.getName(), CHECKS_AND_BALANCES_IPA);
+        put(ROSIES_RED_ALE.getName(), ROSIES_RED_ALE);
+        put(COLD_BREW_COFEE_PORTER.getName(), COLD_BREW_COFEE_PORTER);
+        put(TRIPPLECANOE_AND_TYLER_TOO.getName(), TRIPPLECANOE_AND_TYLER_TOO);
+        put(WIT_OF_THEIR_EYES.getName(), WIT_OF_THEIR_EYES);
+        put(AMBER_WAVES_OF_GRAIN.getName(), AMBER_WAVES_OF_GRAIN);
+        put(SUMMER_SMASH_IPA.getName(), SUMMER_SMASH_IPA);
     }};
 
 }

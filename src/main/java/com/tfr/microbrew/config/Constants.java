@@ -29,7 +29,6 @@ public interface Constants {
     );
 
     interface BrewHouse {
-        double BREW_THRESHOLD = 30.0;
         double BATCH_SIZE = 93.0;
         int FERMENETERS = 8;
         int CARBONATION_VESSELS = 2;
