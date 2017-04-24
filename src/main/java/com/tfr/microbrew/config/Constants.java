@@ -38,13 +38,6 @@ public interface Constants {
         int CARBONATION_VESSELS = 2;
     }
 
-    interface ProductVolumes {
-        Double PINT = 0.125;
-        Double FLIGHT = 0.25;
-        Double HALF_GROWLER = 0.5;
-        Double GROWLER = 1.0;
-    }
-
     Set<DayOfWeek> BREW_DAYS = Sets.newHashSet(
             DayOfWeek.SUNDAY,
             DayOfWeek.MONDAY

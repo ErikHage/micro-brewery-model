@@ -7,19 +7,21 @@ package com.tfr.microbrew.model;
 public class InventoryItem {
 
     private String name;
+    private String category;
     private double quantity;
     private double reorderThreshold;
     private double reorderQuantity;
 
-    public InventoryItem(String name, double quantity, double reorderThreshold, double reorderQuantity) {
+    public InventoryItem(String name, String category, double quantity, double reorderThreshold, double reorderQuantity) {
         this.name = name;
+        this.category = category;
         this.quantity = quantity;
         this.reorderThreshold = reorderThreshold;
         this.reorderQuantity = reorderQuantity;
     }
 
-    public InventoryItem(String name, double reorderThreshold, double reorderQuantity) {
-        this(name, 0.0, reorderThreshold, reorderQuantity);
+    public InventoryItem(String name, String category, double reorderThreshold, double reorderQuantity) {
+        this(name, category, 0.0, reorderThreshold, reorderQuantity);
     }
 
     @Override
@@ -41,6 +43,7 @@ public class InventoryItem {
     public String toString() {
         return "InventoryItem{" +
                 "name='" + name + '\'' +
+                ", category='" + category + '\'' +
                 ", quantity=" + quantity +
                 ", reorderThreshold=" + reorderThreshold +
                 ", reorderQuantity=" + reorderQuantity +
@@ -53,6 +56,14 @@ public class InventoryItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public double getQuantity() {

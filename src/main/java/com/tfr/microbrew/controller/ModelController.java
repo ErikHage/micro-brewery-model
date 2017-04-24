@@ -2,14 +2,18 @@ package com.tfr.microbrew.controller;
 
 import com.tfr.microbrew.compare.BrewPriorityComparator;
 import com.tfr.microbrew.compare.CarbonationPriorityComparator;
+import com.tfr.microbrew.config.BeverageVolume;
 import com.tfr.microbrew.config.BrewStep;
 import com.tfr.microbrew.config.DayOfWeek;
+import com.tfr.microbrew.config.SalesConfig;
 import com.tfr.microbrew.dao.BatchDao;
 import com.tfr.microbrew.helper.BatchHelper;
 import com.tfr.microbrew.model.Batch;
 import com.tfr.microbrew.model.InitialParameters;
 import com.tfr.microbrew.model.InventoryItem;
+import com.tfr.microbrew.model.Sale;
 import com.tfr.microbrew.service.InventoryService;
+import com.tfr.microbrew.service.SalesService;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -33,20 +39,29 @@ public class ModelController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private InventoryService inventoryService;
     private BatchDao batchDao;
+    private SalesService salesService;
+    private InventoryService inventoryService;
     private BrewPriorityComparator brewPriorityComparator;
     private CarbonationPriorityComparator carbonationPriorityComparator;
 
     private final Supplier<SortedSet<Batch>> sortedSetSupplierCarbonation =
             () -> new TreeSet<>(carbonationPriorityComparator);
 
+    private final AtomicInteger fulfilledSales = new AtomicInteger();
+    private final AtomicInteger unfulfilledSales = new AtomicInteger();
+    private final Map<BeverageVolume, Integer> salesByVolume = new HashMap<>();
+    private final Map<String, Integer> salesbyProduct = new HashMap<>();
+
     @Autowired
-    public ModelController(InventoryService inventoryService, BatchDao batchDao,
+    public ModelController(BatchDao batchDao,
+                           SalesService salesService,
+                           InventoryService inventoryService,
                            BrewPriorityComparator brewPriorityComparator,
                            CarbonationPriorityComparator carbonationPriorityComparator) {
-        this.inventoryService = inventoryService;
         this.batchDao = batchDao;
+        this.salesService = salesService;
+        this.inventoryService = inventoryService;
         this.brewPriorityComparator = brewPriorityComparator;
         this.carbonationPriorityComparator = carbonationPriorityComparator;
     }
@@ -78,6 +93,7 @@ public class ModelController {
                 dayOfWeek.getName(), date));
 
         everydayActions();
+        checkInventory();
 
         if(PROCESSING_DAYS.contains(dayOfWeek)) {
             logger.debug("Processing Day");
@@ -91,7 +107,7 @@ public class ModelController {
 
         if(BUSINESS_DAYS.contains(dayOfWeek)) {
             logger.debug("Business Day");
-            businessDay();
+            businessDay(dayOfWeek);
         }
 
         printDayReport(date);
@@ -100,8 +116,6 @@ public class ModelController {
     private void everydayActions() {
         //increment the days in each step
         batchDao.readAll().forEach(b -> b.setDaysInStep(b.getDaysInStep()+1));
-
-        checkInventory();
     }
 
     private void checkInventory() {
@@ -123,11 +137,13 @@ public class ModelController {
             batchDao.create(batch);
         });
 
-
-
         //TODO Check other inventory levels, place orders
-        //TODO calculate costs
+        //TODO calculate costs of orders
     }
+
+
+
+
 
     private void processingDay() {
         //mark all completed carbonation as ready for storage
@@ -187,10 +203,42 @@ public class ModelController {
         //TODO update inventory for the recipe ingredients
     }
 
-    private void businessDay() {
+    private void businessDay(DayOfWeek dayOfWeek) {
+        //generate sales
+        int numberOfSales = getProjectedNuberOfSales(dayOfWeek);
+        List<Sale> sales = salesService.generateSales(numberOfSales);
+
+        //attempt to fulfill Sales
+        sales.forEach(s -> {
+            if(inventoryService.getCurrentQuantity(s.getProductName()) > s.getBeverageProduct().getVolume()) {
+                inventoryService.updateQuantity(s.getProductName(), s.getBeverageProduct().getVolume()*(-1));
+                s.setFulfilled(true);
+                fulfilledSales.incrementAndGet();
+
+                salesByVolume.putIfAbsent(s.getBeverageProduct().getBeverageVolume(), 0);
+                salesByVolume.put(s.getBeverageProduct().getBeverageVolume(), salesByVolume.get(s.getBeverageProduct().getBeverageVolume()) + 1);
+
+                salesbyProduct.putIfAbsent(s.getProductName(), 0);
+                salesbyProduct.put(s.getProductName(), salesbyProduct.get(s.getProductName())+1);
+            } else {
+                s.setNotFulfilledReason("Sale not fulfilled because of insufficient inventory");
+                unfulfilledSales.incrementAndGet();
+            }
+            salesService.saveSale(s);
+        });
+
+
         //TODO calculate changes in inventory for sales
         //TODO calculate revenues
         //TODO note any unhappy customers
+    }
+
+    private int getProjectedNuberOfSales(DayOfWeek dayOfWeek) {
+        int num = ThreadLocalRandom.current().nextInt(SalesConfig.MIN_SALES, SalesConfig.MAX_SALES+1);
+        if(dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+            num = (int) (num * SalesConfig.WEEKEND_FACTOR);
+        }
+        return num;
     }
 
     private void printDayReport(LocalDate date) {
@@ -208,12 +256,17 @@ public class ModelController {
                 sb.append(String.format("\t\t%s : %s days\n", batch.getRecipe().getName(), batch.getDaysInStep())));
         sb.append("Inventory Status\n");
         inventoryService.getInventory().forEach(i ->
-                sb.append(String.format("\t%s: %s\n", i.getName(), i.getQuantity())));
-        sb.append("Cashflow Report\n");
-        sb.append("\tTODO");
-
+                sb.append(String.format("\t%-10s %s: %s\n", i.getCategory(), i.getName(), i.getQuantity())));
+        sb.append("Sales Report\n");
+        sb.append(String.format("\tCompleted Sales  : %s\n", fulfilledSales.get()));
+        sb.append(String.format("\tUnfulfilled Sales: %s\n", unfulfilledSales.get()));
+        sb.append("\tBy Volume\n");
+        salesByVolume.entrySet().forEach(e ->
+                sb.append(String.format("\t\t%-10s: %s \n", e.getKey(), e.getValue())));
+        sb.append("\tBy Product\n");
+        salesbyProduct.entrySet().forEach(e ->
+                sb.append(String.format("\t\t%-30s: %s \n", e.getKey(), e.getValue())));
         logger.debug(sb.toString());
-
     }
 
 }

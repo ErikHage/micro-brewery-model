@@ -1,5 +1,6 @@
 package com.tfr.microbrew.service;
 
+import com.tfr.microbrew.compare.InventoryItemCategoryBasedComparator;
 import com.tfr.microbrew.dao.InventoryDao;
 import com.tfr.microbrew.exception.InventoryException;
 import com.tfr.microbrew.model.InventoryItem;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  *
@@ -21,9 +24,13 @@ public class InventoryServiceImpl implements InventoryService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final InventoryDao inventoryDao;
 
+    private InventoryItemCategoryBasedComparator inventoryItemCategoryBasedComparator;
+
     @Autowired
-    public InventoryServiceImpl(InventoryDao inventoryDao) {
+    public InventoryServiceImpl(InventoryDao inventoryDao,
+                                InventoryItemCategoryBasedComparator inventoryItemCategoryBasedComparator) {
         this.inventoryDao = inventoryDao;
+        this.inventoryItemCategoryBasedComparator = inventoryItemCategoryBasedComparator;
     }
 
     @Override
@@ -38,7 +45,9 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public Set<InventoryItem> getInventory() {
-        return inventoryDao.readAll();
+        SortedSet<InventoryItem> inventory = new TreeSet<>(inventoryItemCategoryBasedComparator);
+        inventory.addAll(inventoryDao.readAll());
+        return inventory;
     }
 
     @Override
@@ -88,6 +97,6 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public void deleteItem(String name) {
         logger.debug(String.format("Deleting item: %s", name));
-        inventoryDao.delete(new InventoryItem(name, 0.0, 0.0));
+        inventoryDao.delete(new InventoryItem(name, "", 0.0, 0.0));
     }
 }

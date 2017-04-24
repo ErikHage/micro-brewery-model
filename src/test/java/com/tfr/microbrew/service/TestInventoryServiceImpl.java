@@ -29,8 +29,8 @@ public class TestInventoryServiceImpl {
     public void setUp() {
         inventoryService.deleteItem("TestItem1");
         inventoryService.deleteItem("TestItem2");
-        InventoryItem inventoryItem1 = new InventoryItem("TestItem1", 100.0, 50.0, 250.0);
-        InventoryItem inventoryItem2 = new InventoryItem("TestItem2", 155.0, 100.0, 200.0);
+        InventoryItem inventoryItem1 = new InventoryItem("TestItem1", "",100.0, 50.0, 250.0);
+        InventoryItem inventoryItem2 = new InventoryItem("TestItem2", "",155.0, 100.0, 200.0);
         inventoryService.addItem(inventoryItem1);
         inventoryService.addItem(inventoryItem2);
     }
@@ -47,7 +47,7 @@ public class TestInventoryServiceImpl {
 
     @Test(expected = InventoryException.class)
     public void testAdd_ExpectException() {
-        InventoryItem inventoryItem1 = new InventoryItem("TestItem1", 100.0, 50.0, 250.0);
+        InventoryItem inventoryItem1 = new InventoryItem("TestItem1", "",100.0, 50.0, 250.0);
         inventoryService.addItem(inventoryItem1);
     }
 
