@@ -88,8 +88,8 @@ public class InventoryServiceImpl implements InventoryService {
                     name, changeInQuantity));
         }
         double newQuantity = inventoryItem.getQuantity() + changeInQuantity;
-        logger.debug(String.format("Updating quantity for %s from %s to %s",
-                inventoryItem.getName(), inventoryItem.getQuantity(), newQuantity));
+//        logger.debug(String.format("Updating quantity for %s from %s to %s",
+//                inventoryItem.getName(), inventoryItem.getQuantity(), newQuantity));
         inventoryItem.setQuantity(newQuantity);
         inventoryDao.update(inventoryItem);
     }

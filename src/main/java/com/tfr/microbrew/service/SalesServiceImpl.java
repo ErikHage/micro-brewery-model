@@ -2,15 +2,18 @@ package com.tfr.microbrew.service;
 
 import com.tfr.microbrew.config.Constants;
 import com.tfr.microbrew.config.SalesConfig;
+import com.tfr.microbrew.dao.SalesDao;
 import com.tfr.microbrew.model.BeverageProduct;
 import com.tfr.microbrew.model.Sale;
 import com.tfr.microbrew.probability.NormalizedProbability;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -21,12 +24,14 @@ public class SalesServiceImpl implements SalesService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static final List<Sale> SALES = new ArrayList<>();
-
     private NormalizedProbability<BeverageProduct> volumeProbability;
     private NormalizedProbability<String> productProbability;
 
-    public SalesServiceImpl() {
+    private SalesDao salesDao;
+
+    @Autowired
+    public SalesServiceImpl(SalesDao salesDao) {
+        this.salesDao = salesDao;
         this.volumeProbability = new NormalizedProbability<>();
         this.productProbability = new NormalizedProbability<>();
         init();
@@ -58,7 +63,14 @@ public class SalesServiceImpl implements SalesService {
     }
 
     @Override
-    public void saveSale(Sale sale) {
-        SALES.add(sale);
+    public void performSale(Sale sale) {
+        salesDao.create(sale);
     }
+
+    @Override
+    public int getSales(boolean isFulfilled) {
+        return salesDao.readByFulfilled(isFulfilled).size();
+    }
+
+
 }

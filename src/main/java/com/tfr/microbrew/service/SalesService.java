@@ -13,6 +13,8 @@ public interface SalesService {
     Sale generateSale();
     List<Sale> generateSales(int num);
 
-    void saveSale(Sale sale);
+    void performSale(Sale sale);
+
+    int getSales(boolean isFulfilled);
 
 }
