@@ -52,7 +52,8 @@ public class ModelController {
 
     private void setInitialContext(InitialParameters initialParameters) {
         logger.debug("Initializing starting state");
-        initialParameters.getInitialInventory().forEach(inventoryService::updateItem);
+        initialParameters.getInitialInventory().entrySet().forEach(e ->
+                inventoryService.updateQuantity(e.getKey(), e.getValue()));
         logger.debug("Starting state initialized");
     }
 

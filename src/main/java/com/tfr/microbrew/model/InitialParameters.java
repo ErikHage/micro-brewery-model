@@ -2,6 +2,7 @@ package com.tfr.microbrew.model;
 
 import org.joda.time.LocalDate;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Set;
  */
 public class InitialParameters {
 
-    private Set<InventoryItem> initialInventory;
+    private Map<String, Double> initialInventory;
 
     private LocalDate startDate;
     private LocalDate endDate;
@@ -20,11 +21,11 @@ public class InitialParameters {
 
     }
 
-    public Set<InventoryItem> getInitialInventory() {
+    public Map<String, Double> getInitialInventory() {
         return initialInventory;
     }
 
-    public void setInitialInventory(Set<InventoryItem> initialInventory) {
+    public void setInitialInventory(Map<String, Double> initialInventory) {
         this.initialInventory = initialInventory;
     }
 

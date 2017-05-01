@@ -83,9 +83,9 @@ public class InventoryServiceImpl implements InventoryService {
     public void updateQuantity(String name, double changeInQuantity) throws InventoryException {
         InventoryItem inventoryItem = inventoryDao.readByName(name);
         if(inventoryItem == null) {
-            logger.error(String.format("Cannot update %s by %s units, does not exist in inventory", name, changeInQuantity));
-            throw new InventoryException(String.format("Cannot update %s by %s units, does not exist in inventory",
-                    name, changeInQuantity));
+            String message = String.format("Cannot update %s by %s units, does not exist in inventory", name, changeInQuantity);
+            logger.error(message);
+            throw new InventoryException(message);
         }
         double newQuantity = inventoryItem.getQuantity() + changeInQuantity;
 //        logger.debug(String.format("Updating quantity for %s from %s to %s",

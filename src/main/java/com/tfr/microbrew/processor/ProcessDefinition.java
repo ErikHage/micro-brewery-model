@@ -2,13 +2,17 @@ package com.tfr.microbrew.processor;
 
 import com.tfr.microbrew.config.DayOfWeek;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -18,45 +22,30 @@ import java.util.Queue;
 @Component("ProcessDefinition")
 public class ProcessDefinition {
 
-//    private final InventoryProcessor inventoryProcessor;
-//    private final BrewingProcessor brewingProcessor;
-//    private final TransferProcessor transferProcessor;
-//    private final SalesProcessor salesProcessor;
-//    private final ReportingProcessor reportingProcessor;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final List<Processor> processors;
+    @Resource(name = "DailyProcessors")
+    private Queue<Processor> dailyProcessors;
 
-    @Autowired
-    public ProcessDefinition(InventoryProcessor inventoryProcessor,
-                             BrewingProcessor brewingProcessor,
-                             TransferProcessor transferProcessor,
-                             SalesProcessor salesProcessor,
-                             ReportingProcessor reportingProcessor) {
-//        this.inventoryProcessor = inventoryProcessor;
-//        this.brewingProcessor = brewingProcessor;
-//        this.transferProcessor = transferProcessor;
-//        this.salesProcessor = salesProcessor;
-//        this.reportingProcessor = reportingProcessor;
-
-        processors = new ArrayList<>();
-        processors.add(inventoryProcessor);
-        processors.add(transferProcessor);
-        processors.add(brewingProcessor);
-        processors.add(salesProcessor);
-        processors.add(reportingProcessor);
+    public ProcessDefinition() {
     }
 
     public Queue<Processor> getProcesses(LocalDate date) {
-        Queue<Processor> processorsForDay = new LinkedList<>();
+        Queue<Processor> processorsForDay;
         DayOfWeek dayOfWeek = DayOfWeek.getFromInt(date.getDayOfWeek());
 
-        processors.forEach(p -> {
-            if(p.getDaysToProcess().contains(dayOfWeek)) {
-                processorsForDay.add(p);
-            }
-        });
+        processorsForDay = dailyProcessors.stream()
+                .filter(p -> p.getDaysToProcess().contains(dayOfWeek))
+                .collect(Collectors.toCollection(LinkedList::new));
 
+        logResult(processorsForDay);
         return processorsForDay;
+    }
+
+    private void logResult(Queue<Processor> processorsForDay) {
+        StringBuilder sb = new StringBuilder("Processors: ");
+        processorsForDay.forEach(p -> sb.append(String.format("%s, ", p.getName())));
+        logger.debug(sb.toString());
     }
 
 }
