@@ -1,9 +1,10 @@
 package com.tfr.microbrew.processor;
 
-import com.tfr.microbrew.dao.BatchDao;
-import com.tfr.microbrew.helper.BatchHelper;
-import com.tfr.microbrew.model.Batch;
+import com.google.common.collect.Sets;
+import com.tfr.microbrew.config.DayOfWeek;
+import com.tfr.microbrew.config.InventoryConfig;
 import com.tfr.microbrew.model.InventoryItem;
+import com.tfr.microbrew.service.BatchService;
 import com.tfr.microbrew.service.InventoryService;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.tfr.microbrew.config.Constants.ACTIVE_PRODUCTS;
@@ -26,40 +28,70 @@ public class InventoryProcessor implements Processor {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private BatchDao batchDao;
+    private BatchService batchService;
     private InventoryService inventoryService;
 
     @Autowired
-    public InventoryProcessor(BatchDao batchDao,
+    public InventoryProcessor(BatchService batchService,
                               InventoryService inventoryService) {
-        this.batchDao = batchDao;
+        this.batchService = batchService;
         this.inventoryService = inventoryService;
     }
 
     @Override
     public void process(LocalDate date) {
         logger.debug("Increasing age of all in progress batches by 1 day");
-        batchDao.readAll().forEach(b -> b.setDaysInStep(b.getDaysInStep()+1));
+        batchService.getAllInProgress().forEach(b -> b.setDaysInStep(b.getDaysInStep()+1));
 
         logger.debug("Checking Inventory Levels");
 
+        checkBeerInventory();
+        checkInventoryLevels();
+
+        //TODO calculate costs of orders
+    }
+
+    private void checkBeerInventory() {
         //Check which batches need to be brewed and place them in TO_BREW state
         List<String> toBrew = ACTIVE_PRODUCTS.stream()
                 .map(productName -> inventoryService.getItemByName(productName))
                 .filter(Objects::nonNull)
-                .filter(product -> batchDao.readByRecipe(product.getName()).size() == 0)
+                .filter(product -> batchService.getByRecipe(product.getName()).size() == 0)
                 .filter(product -> product.getQuantity() < product.getReorderThreshold())
                 .map(InventoryItem::getName)
                 .collect(Collectors.toList());
 
         logger.debug(String.format("Adding these %s batches to the queue: %s", toBrew.size(), toBrew));
 
-        toBrew.forEach(productName -> {
-            Batch batch = BatchHelper.getBatch(productName);
-            batchDao.create(batch);
-        });
+        toBrew.forEach(productName -> batchService.addBatch(productName));
+    }
 
-        //TODO Check other inventory levels, place orders
-        //TODO calculate costs of orders
+    private void checkInventoryLevels() {
+        List<InventoryItem> itemsToReorder = inventoryService.getInventory()
+                .stream()
+                .filter(i -> ! i.getCategory().equals(InventoryConfig.Categories.BEER))
+                .filter(i -> i.getQuantity() < i.getReorderThreshold())
+                .collect(Collectors.toList());
+
+        if(itemsToReorder.size() > 0) {
+            logger.debug(String.format("Found %s items to be reordered", itemsToReorder.size()));
+        } else {
+            logger.debug("No items to reorder");
+        }
+
+        itemsToReorder.forEach(i -> {
+            //TODO add ordering time delay for items
+            i.setQuantity(i.getQuantity() + i.getReorderQuantity());
+        });
+    }
+
+    @Override
+    public Set<DayOfWeek> getDaysToProcess() {
+        return Sets.newHashSet(DayOfWeek.values());
+    }
+
+    @Override
+    public String getName() {
+        return "InventoryProcessor";
     }
 }

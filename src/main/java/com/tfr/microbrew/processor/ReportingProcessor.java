@@ -1,7 +1,9 @@
 package com.tfr.microbrew.processor;
 
+import com.google.common.collect.Sets;
 import com.tfr.microbrew.config.BrewStep;
-import com.tfr.microbrew.dao.BatchDao;
+import com.tfr.microbrew.config.DayOfWeek;
+import com.tfr.microbrew.service.BatchService;
 import com.tfr.microbrew.service.InventoryService;
 import com.tfr.microbrew.service.SalesService;
 import org.joda.time.LocalDate;
@@ -9,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 /**
  *
@@ -20,15 +24,15 @@ public class ReportingProcessor implements Processor {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private BatchDao batchDao;
+    private BatchService batchService;
     private SalesService salesService;
     private InventoryService inventoryService;
 
     @Autowired
-    public ReportingProcessor(BatchDao batchDao,
+    public ReportingProcessor(BatchService batchService,
                               SalesService salesService,
                               InventoryService inventoryService) {
-        this.batchDao = batchDao;
+        this.batchService = batchService;
         this.salesService = salesService;
         this.inventoryService = inventoryService;
     }
@@ -39,13 +43,13 @@ public class ReportingProcessor implements Processor {
         sb.append(String.format("----------End of Day Report: %s ----------\n", date));
         sb.append("Batch Status\n");
         sb.append("\tBatches To Brew\n");
-        batchDao.readByStep(BrewStep.TO_BREW).forEach(batch ->
+        batchService.getByStep(BrewStep.TO_BREW).forEach(batch ->
                 sb.append(String.format("\t\t%s : %s days\n", batch.getRecipe().getName(), batch.getDaysInStep())));
         sb.append("\tFermenting Batches\n");
-        batchDao.readByStep(BrewStep.FERMENT).forEach(batch ->
+        batchService.getByStep(BrewStep.FERMENT).forEach(batch ->
                 sb.append(String.format("\t\t%s : %s days\n", batch.getRecipe().getName(), batch.getDaysInStep())));
         sb.append("\tCarbonating Batches\n");
-        batchDao.readByStep(BrewStep.CARBONATE).forEach(batch ->
+        batchService.getByStep(BrewStep.CARBONATE).forEach(batch ->
                 sb.append(String.format("\t\t%s : %s days\n", batch.getRecipe().getName(), batch.getDaysInStep())));
         sb.append("Inventory Status\n");
         inventoryService.getInventory().forEach(i ->
@@ -60,5 +64,15 @@ public class ReportingProcessor implements Processor {
 //        salesByProduct.entrySet().forEach(e ->
 //                sb.append(String.format("\t\t%-30s: %s \n", e.getKey(), e.getValue())));
         logger.debug(sb.toString());
+    }
+
+    @Override
+    public Set<DayOfWeek> getDaysToProcess() {
+        return Sets.newHashSet(DayOfWeek.values());
+    }
+
+    @Override
+    public String getName() {
+        return "ReportingProcessor";
     }
 }

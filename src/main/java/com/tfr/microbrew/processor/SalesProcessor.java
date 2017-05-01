@@ -1,6 +1,7 @@
 package com.tfr.microbrew.processor;
 
 import com.tfr.microbrew.config.BeverageVolume;
+import com.tfr.microbrew.config.Constants;
 import com.tfr.microbrew.config.DayOfWeek;
 import com.tfr.microbrew.config.SalesConfig;
 import com.tfr.microbrew.model.Sale;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -68,6 +70,16 @@ public class SalesProcessor implements Processor {
         //TODO calculate changes in inventory for sales
         //TODO calculate revenues
         //TODO note any unhappy customers
+    }
+
+    @Override
+    public Set<DayOfWeek> getDaysToProcess() {
+        return Constants.BUSINESS_DAYS;
+    }
+
+    @Override
+    public String getName() {
+        return "SalesProcessor";
     }
 
     private int getProjectedNumberOfSales(DayOfWeek dayOfWeek) {

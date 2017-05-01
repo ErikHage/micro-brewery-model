@@ -34,16 +34,16 @@ public interface Constants {
 
     interface BrewHouse {
         double BATCH_SIZE = 93.0;
-        int FERMENTERS = 8;
+        int FERMENTING_VESSELS = 8;
         int CARBONATION_VESSELS = 2;
     }
 
     Set<DayOfWeek> BREW_DAYS = Sets.newHashSet(
-            DayOfWeek.SUNDAY,
-            DayOfWeek.MONDAY
+            DayOfWeek.SATURDAY,
+            DayOfWeek.SUNDAY
     );
 
-    Set<DayOfWeek> PROCESSING_DAYS = Sets.newHashSet(
+    Set<DayOfWeek> TRANSFER_DAYS = Sets.newHashSet(
             DayOfWeek.THURSDAY,
             DayOfWeek.FRIDAY,
             DayOfWeek.SATURDAY,

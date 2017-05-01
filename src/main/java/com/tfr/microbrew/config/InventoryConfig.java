@@ -12,6 +12,8 @@ import java.util.Set;
  */
 public interface InventoryConfig {
 
+    //TODO chnage to all 0 quantity, should be initiated by InitialContext
+
     Set<InventoryItem> DEFAULT_ITEMS = Sets.newHashSet(
         //Beers
         new InventoryItem(Constants.RecipeNames.CHECKS_AND_BALANCES_IPA, Categories.BEER, 0, 100, Constants.BrewHouse.BATCH_SIZE),
@@ -20,39 +22,34 @@ public interface InventoryConfig {
         new InventoryItem(Constants.RecipeNames.TRIPPLECANOE_AND_TYLER_TOO, Categories.BEER, 0, 40, Constants.BrewHouse.BATCH_SIZE),
         new InventoryItem(Constants.RecipeNames.WIT_OF_THEIR_EYES, Categories.BEER, 0, 60, Constants.BrewHouse.BATCH_SIZE),
         new InventoryItem(Constants.RecipeNames.AMBER_WAVES_OF_GRAIN, Categories.BEER, 0, 60, Constants.BrewHouse.BATCH_SIZE),
-        new InventoryItem(Constants.RecipeNames.SUMMER_SMASH_IPA, Categories.BEER, 0, 60, Constants.BrewHouse.BATCH_SIZE)
+        new InventoryItem(Constants.RecipeNames.SUMMER_SMASH_IPA, Categories.BEER, 0, 60, Constants.BrewHouse.BATCH_SIZE),
 
-//        //Grains
-//        new InventoryItem("", Categories.GRAIN, 0, 50, 100),
-//        new InventoryItem("", Categories.GRAIN, 0, 50, 100),
-//        new InventoryItem("", Categories.GRAIN, 0, 50, 100),
-//        new InventoryItem("", Categories.GRAIN, 0, 50, 100),
-//        new InventoryItem("", Categories.GRAIN, 0, 50, 100),
-//        new InventoryItem("", Categories.GRAIN, 0, 50, 100),
-//
-//        //Hops
-//        new InventoryItem("", Categories.HOP, 0, 50, 100),
-//        new InventoryItem("", Categories.HOP, 0, 50, 100),
-//        new InventoryItem("", Categories.HOP, 0, 50, 100),
-//        new InventoryItem("", Categories.HOP, 0, 50, 100),
-//        new InventoryItem("", Categories.HOP, 0, 50, 100),
-//        new InventoryItem("", Categories.HOP, 0, 50, 100),
-//
-//        //Adjuncts
-//        new InventoryItem("", Categories.ADJUNCT, 0, 50, 100),
-//        new InventoryItem("", Categories.ADJUNCT, 0, 50, 100),
-//        new InventoryItem("", Categories.ADJUNCT, 0, 50, 100),
-//        new InventoryItem("", Categories.ADJUNCT, 0, 50, 100),
-//        new InventoryItem("", Categories.ADJUNCT, 0, 50, 100),
-//        new InventoryItem("", Categories.ADJUNCT, 0, 50, 100),
-//
-//        //Yeast
-//        new InventoryItem("", Categories.YEAST, 0, 50, 100),
-//        new InventoryItem("", Categories.YEAST, 0, 50, 100),
-//        new InventoryItem("", Categories.YEAST, 0, 50, 100),
-//        new InventoryItem("", Categories.YEAST, 0, 50, 100),
-//        new InventoryItem("", Categories.YEAST, 0, 50, 100),
-//        new InventoryItem("", Categories.YEAST, 0, 50, 100)
+        //Grains
+        new InventoryItem(Ingredients.Grain.AMERICAN_2_ROW, Categories.GRAIN, 600, 500, 1200),
+        new InventoryItem(Ingredients.Grain.BELGIAN_2_ROW, Categories.GRAIN, 600, 500, 1200),
+        new InventoryItem(Ingredients.Grain.PILSEN_2_ROW, Categories.GRAIN, 600, 500, 1200),
+        new InventoryItem(Ingredients.Grain.CARAMEL_20L, Categories.GRAIN, 200, 150, 500),
+        new InventoryItem(Ingredients.Grain.CARAMEL_40L, Categories.GRAIN, 200, 150, 500),
+        new InventoryItem(Ingredients.Grain.CARAMEL_60L, Categories.GRAIN, 200, 150, 500),
+        new InventoryItem(Ingredients.Grain.BISCUIT, Categories.GRAIN, 150, 100, 250),
+
+        //Hops
+        new InventoryItem(Ingredients.Hop.STYRIAN_GOLDINGS, Categories.HOP, 50, 50, 100),
+        new InventoryItem(Ingredients.Hop.KENT_GOLDINGS, Categories.HOP, 50, 50, 100),
+        new InventoryItem(Ingredients.Hop.CASCADE, Categories.HOP, 100, 50, 150),
+        new InventoryItem(Ingredients.Hop.CITRA, Categories.HOP, 30, 20, 50),
+
+        //Adjuncts
+        new InventoryItem(Ingredients.Adjunct.IRISH_MOSS, Categories.ADJUNCT, 10, 5, 30),
+        new InventoryItem(Ingredients.Adjunct.LIGHT_CANDI_SUGAR, Categories.ADJUNCT, 100, 50, 100),
+        new InventoryItem(Ingredients.Adjunct.DARK_CANDI_SUGAR, Categories.ADJUNCT, 100, 50, 100),
+
+        //Yeast
+        new InventoryItem(Ingredients.Yeast.WHITELABS_SAISON, Categories.YEAST, 20, 10, 30),
+        new InventoryItem(Ingredients.Yeast.WHITELABS_WITBIER, Categories.YEAST, 20, 10, 30),
+        new InventoryItem(Ingredients.Yeast.SAFALE_AMERICAN_ALE, Categories.YEAST, 20, 10, 30),
+        new InventoryItem(Ingredients.Yeast.SAFALE_ENGLISH_ALE, Categories.YEAST, 20, 10, 30)
+
 
     );
 

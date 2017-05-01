@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Queue;
+
 import static com.tfr.microbrew.config.Constants.*;
 
 /**
@@ -23,26 +25,13 @@ public class ModelController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private InventoryService inventoryService;
-
-    private SalesProcessor salesProcessor;
-    private BrewingProcessor brewingProcessor;
-    private TransferProcessor transferProcessor;
-    private ReportingProcessor reportingProcessor;
-    private InventoryProcessor inventoryProcessor;
+    private ProcessDefinition processDefinition;
 
     @Autowired
-    public ModelController(SalesProcessor salesProcessor,
-                           BrewingProcessor brewingProcessor,
-                           TransferProcessor transferProcessor,
-                           ReportingProcessor reportingProcessor,
-                           InventoryProcessor inventoryProcessor,
-                           InventoryService inventoryService) {
-        this.salesProcessor = salesProcessor;
-        this.brewingProcessor = brewingProcessor;
-        this.transferProcessor = transferProcessor;
-        this.reportingProcessor = reportingProcessor;
-        this.inventoryProcessor = inventoryProcessor;
+    public ModelController(InventoryService inventoryService,
+                           ProcessDefinition processDefinition) {
         this.inventoryService = inventoryService;
+        this.processDefinition = processDefinition;
     }
 
     public void runModel(InitialParameters initialParameters) {
@@ -72,19 +61,8 @@ public class ModelController {
         logger.debug(String.format("-------------------- Processing for %s %s --------------------",
                 dayOfWeek.getName(), date));
 
-        inventoryProcessor.process(date);
-
-        if(PROCESSING_DAYS.contains(dayOfWeek)) {
-            transferProcessor.process(date);
-        }
-        if(BREW_DAYS.contains(dayOfWeek)) {
-            brewingProcessor.process(date);
-        }
-        if(BUSINESS_DAYS.contains(dayOfWeek)) {
-            salesProcessor.process(date);
-        }
-
-        reportingProcessor.process(date);
+        Queue<Processor> processorsForDay = processDefinition.getProcesses(date);
+        processorsForDay.forEach(p -> p.process(date));
     }
 
 }
