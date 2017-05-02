@@ -4,12 +4,12 @@ package com.tfr.microbrew.model;
  *
  * Created by Erik on 4/22/2017.
  */
-public class RecipeIngredient {
+public class Ingredient {
 
     private String name;
     private double quantity;
 
-    public RecipeIngredient(String name, double quantity) {
+    public Ingredient(String name, double quantity) {
         this.name = name;
         this.quantity = quantity;
     }
@@ -19,7 +19,7 @@ public class RecipeIngredient {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RecipeIngredient that = (RecipeIngredient) o;
+        Ingredient that = (Ingredient) o;
 
         if (Double.compare(that.quantity, quantity) != 0) return false;
         return name.equals(that.name);
@@ -37,7 +37,7 @@ public class RecipeIngredient {
 
     @Override
     public String toString() {
-        return "RecipeIngredient{" +
+        return "Ingredient{" +
                 "name='" + name + '\'' +
                 ", quantity=" + quantity +
                 '}';

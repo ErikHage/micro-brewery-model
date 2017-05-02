@@ -12,12 +12,12 @@ public class Recipe {
     private String name;
     private double volume;
 
-    private List<RecipeIngredient> ingredients;
+    private List<Ingredient> ingredients;
 
     private long fermentationDays;
     private long carbonationDays;
 
-    public Recipe(String name, double volume, List<RecipeIngredient> ingredients,
+    public Recipe(String name, double volume, List<Ingredient> ingredients,
                   long fermentationDays, long carbonationDays) {
         this.name = name;
         this.volume = volume;
@@ -68,11 +68,11 @@ public class Recipe {
         this.volume = volume;
     }
 
-    public List<RecipeIngredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<RecipeIngredient> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
