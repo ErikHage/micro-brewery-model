@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Checks and Balances IPA",
+    "category": "Beer",
+    "reorderThreshold": 100,
+    "reorderQuantity": 0
+  },
+  {
+    "name": "Rosie's Red Ale",
+    "category": "Beer",
+    "reorderThreshold": 60,
+    "reorderQuantity": 0
+  },
+  {
+    "name": "Cold Brew Coffee Porter",
+    "category": "Beer",
+    "reorderThreshold": 60,
+    "reorderQuantity": 0
+  },
+  {
+    "name": "Tripplecanoe and Tyler Too",
+    "category": "Beer",
+    "reorderThreshold": 40,
+    "reorderQuantity": 0
+  },
+  {
+    "name": "Wit of Their Eyes",
+    "category": "Beer",
+    "reorderThreshold": 60,
+    "reorderQuantity": 0
+  },
+  {
+    "name": "Amber Waves of Grain",
+    "category": "Beer",
+    "reorderThreshold": 60,
+    "reorderQuantity": 0
+  },
+  {
+    "name": "Summer SMaSH IPA",
+    "category": "Beer",
+    "reorderThreshold": 60,
+    "reorderQuantity": 0
+  },
+
+
+
+
+
+
+
+  {
+    "name": "American 2-Row Pale Malt",
+    "category": "Grain",
+    "reorderThreshold": 500,
+    "reorderQuantity": 1200
+  },
+  {
+    "name": "Belgian 2-Row Pale Malt",
+    "category": "Grain",
+    "reorderThreshold": 500,
+    "reorderQuantity": 1200
+  },
+  {
+    "name": "Pilsen 2-Row Pale Malt",
+    "category": "Grain",
+    "reorderThreshold": 500,
+    "reorderQuantity": 1200
+  },
+  {
+    "name": "Caramel 20L Malt",
+    "category": "Grain",
+    "reorderThreshold": 150,
+    "reorderQuantity": 500
+  },
+  {
+    "name": "Caramel 40L Malt",
+    "category": "Grain",
+    "reorderThreshold": 150,
+    "reorderQuantity": 500
+  },
+  {
+    "name": "Caramel 60L Malt",
+    "category": "Grain",
+    "reorderThreshold": 150,
+    "reorderQuantity": 500
+  },
+  {
+    "name": "Biscuit Malt",
+    "category": "Grain",
+    "reorderThreshold": 100,
+    "reorderQuantity": 250
+  },
+
+
+
+
+
+
+
+  {
+    "name": "Styrian Golding",
+    "category": "Hop",
+    "reorderThreshold": 50,
+    "reorderQuantity": 100
+  },
+  {
+    "name": "Kent Golding",
+    "category": "Hop",
+    "reorderThreshold": 50,
+    "reorderQuantity": 100
+  },
+  {
+    "name": "Cascade",
+    "category": "Hop",
+    "reorderThreshold": 50,
+    "reorderQuantity": 150
+  },
+  {
+    "name": "Citra",
+    "category": "Hop",
+    "reorderThreshold": 20,
+    "reorderQuantity": 50
+  },
+
+
+
+
+
+  {
+    "name": "Irish Moss",
+    "category": "Adjunct",
+    "reorderThreshold": 5,
+    "reorderQuantity": 30
+  },
+  {
+    "name": "Light Belgian Candi Sugar",
+    "category": "Adjunct",
+    "reorderThreshold": 50,
+    "reorderQuantity": 100
+  },
+  {
+    "name": "Dark Belgian Candi Sugar",
+    "category": "Adjunct",
+    "reorderThreshold": 50,
+    "reorderQuantity": 100
+  },
+
+
+
+
+
+
+
+  {
+    "name": "White Labs Saison",
+    "category": "Yeast",
+    "reorderThreshold": 10,
+    "reorderQuantity": 30
+  },
+  {
+    "name": "White Labs Witbier",
+    "category": "Yeast",
+    "reorderThreshold": 10,
+    "reorderQuantity": 30
+  },
+  {
+    "name": "Safale American Ale",
+    "category": "Yeast",
+    "reorderThreshold": 10,
+    "reorderQuantity": 30
+  },
+  {
+    "name": "Safale English Ale",
+    "category": "Yeast",
+    "reorderThreshold": 10,
+    "reorderQuantity": 30
+  }
+]

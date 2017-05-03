@@ -38,6 +38,14 @@ public interface Constants {
         int CARBONATION_VESSELS = 2;
     }
 
+    interface InventoryCategory {
+        String GRAIN = "Grain";
+        String HOP = "Hop";
+        String YEAST = "Yeast";
+        String ADJUNCT = "Adjunct";
+        String BEER = "Beer";
+    }
+
     Set<DayOfWeek> BREW_DAYS = Sets.newHashSet(
             DayOfWeek.SATURDAY,
             DayOfWeek.SUNDAY

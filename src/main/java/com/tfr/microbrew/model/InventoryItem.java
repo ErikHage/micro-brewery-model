@@ -12,6 +12,10 @@ public class InventoryItem {
     private double reorderThreshold;
     private double reorderQuantity;
 
+    public InventoryItem() {
+        //required for jackson
+    }
+
     public InventoryItem(String name, String category, double quantity, double reorderThreshold, double reorderQuantity) {
         this.name = name;
         this.category = category;

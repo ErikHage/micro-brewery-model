@@ -1,8 +1,17 @@
 package com.tfr.microbrew.config;
 
-import com.google.common.collect.Sets;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 import com.tfr.microbrew.model.InventoryItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Set;
 
 /**
@@ -10,55 +19,30 @@ import java.util.Set;
  *
  * Created by Erik on 4/23/2017.
  */
-public interface InventoryConfig {
+@Configuration
+public class InventoryConfig {
 
-    Set<InventoryItem> DEFAULT_ITEMS = Sets.newHashSet(
-        //Beers
-        new InventoryItem(Constants.RecipeNames.CHECKS_AND_BALANCES_IPA, Categories.BEER, 0, 100, Constants.BrewHouse.BATCH_SIZE),
-        new InventoryItem(Constants.RecipeNames.ROSIES_RED_ALE, Categories.BEER, 0, 80, Constants.BrewHouse.BATCH_SIZE),
-        new InventoryItem(Constants.RecipeNames.COLD_BREW_COFEE_PORTER, Categories.BEER, 0, 60, Constants.BrewHouse.BATCH_SIZE),
-        new InventoryItem(Constants.RecipeNames.TRIPPLECANOE_AND_TYLER_TOO, Categories.BEER, 0, 40, Constants.BrewHouse.BATCH_SIZE),
-        new InventoryItem(Constants.RecipeNames.WIT_OF_THEIR_EYES, Categories.BEER, 0, 60, Constants.BrewHouse.BATCH_SIZE),
-        new InventoryItem(Constants.RecipeNames.AMBER_WAVES_OF_GRAIN, Categories.BEER, 0, 60, Constants.BrewHouse.BATCH_SIZE),
-        new InventoryItem(Constants.RecipeNames.SUMMER_SMASH_IPA, Categories.BEER, 0, 60, Constants.BrewHouse.BATCH_SIZE),
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-        //Grains
-        new InventoryItem(Ingredients.Grain.AMERICAN_2_ROW, Categories.GRAIN, 0, 500, 1200),
-        new InventoryItem(Ingredients.Grain.BELGIAN_2_ROW, Categories.GRAIN, 0, 500, 1200),
-        new InventoryItem(Ingredients.Grain.PILSEN_2_ROW, Categories.GRAIN, 0, 500, 1200),
-        new InventoryItem(Ingredients.Grain.CARAMEL_20L, Categories.GRAIN, 0, 150, 500),
-        new InventoryItem(Ingredients.Grain.CARAMEL_40L, Categories.GRAIN, 0, 150, 500),
-        new InventoryItem(Ingredients.Grain.CARAMEL_60L, Categories.GRAIN, 0, 150, 500),
-        new InventoryItem(Ingredients.Grain.BISCUIT, Categories.GRAIN, 0, 100, 250),
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-        //Hops
-        new InventoryItem(Ingredients.Hop.STYRIAN_GOLDINGS, Categories.HOP, 0, 50, 100),
-        new InventoryItem(Ingredients.Hop.KENT_GOLDINGS, Categories.HOP, 0, 50, 100),
-        new InventoryItem(Ingredients.Hop.CASCADE, Categories.HOP, 0, 50, 150),
-        new InventoryItem(Ingredients.Hop.CITRA, Categories.HOP, 0, 20, 50),
+    private final String DATA_FILE = "config/inventory.json";
 
-        //Adjuncts
-        new InventoryItem(Ingredients.Adjunct.IRISH_MOSS, Categories.ADJUNCT, 0, 5, 30),
-        new InventoryItem(Ingredients.Adjunct.LIGHT_CANDI_SUGAR, Categories.ADJUNCT, 0, 50, 100),
-        new InventoryItem(Ingredients.Adjunct.DARK_CANDI_SUGAR, Categories.ADJUNCT, 0, 50, 100),
+    @Bean(name = "InventoryItems")
+    public Set<InventoryItem> inventoryItems() {
+        Set<InventoryItem> items;
 
-        //Yeast
-        new InventoryItem(Ingredients.Yeast.WHITELABS_SAISON, Categories.YEAST, 0, 10, 30),
-        new InventoryItem(Ingredients.Yeast.WHITELABS_WITBIER, Categories.YEAST, 0, 10, 30),
-        new InventoryItem(Ingredients.Yeast.SAFALE_AMERICAN_ALE, Categories.YEAST, 0, 10, 30),
-        new InventoryItem(Ingredients.Yeast.SAFALE_ENGLISH_ALE, Categories.YEAST, 0, 10, 30)
+        try {
+            URL url = Resources.getResource(DATA_FILE);
+            String json = Resources.toString(url, Charsets.UTF_8);
+            items = objectMapper.readValue(json, new TypeReference<Set<InventoryItem>>(){});
+            logger.debug("Loaded inventory config from " + DATA_FILE);
+        } catch(IOException ex) {
+            logger.error("Exception occurred when loading inventory configuration from " + DATA_FILE, ex);
+            throw new RuntimeException("Exception occurred when loading inventory configuration from " + DATA_FILE);
+        }
 
-    );
-
-    interface Categories {
-
-        String GRAIN = "Grain";
-        String HOP = "Hop";
-        String YEAST = "Yeast";
-        String ADJUNCT = "Adjunct";
-
-        String BEER = "Beer";
-
+        return items;
     }
 
 }

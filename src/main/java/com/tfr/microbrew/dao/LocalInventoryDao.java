@@ -4,8 +4,11 @@ import com.tfr.microbrew.config.InventoryConfig;
 import com.tfr.microbrew.model.InventoryItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -21,11 +24,12 @@ import java.util.stream.Collectors;
 public class LocalInventoryDao implements InventoryDao {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     private static final Map<String, InventoryItem> INVENTORY = new HashMap<>();
 
-    public LocalInventoryDao() {
-        InventoryConfig.DEFAULT_ITEMS.forEach(item -> INVENTORY.put(item.getName(), item));
+    @Autowired
+    public LocalInventoryDao(@Qualifier("InventoryItems") Set<InventoryItem> inventoryItems) {
+        inventoryItems.forEach(item -> INVENTORY.put(item.getName(), item));
+        logger.debug(String.format("Loaded %s inventory items from config", INVENTORY.size()));
     }
 
     @Override

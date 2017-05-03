@@ -10,7 +10,7 @@ public interface Ingredients {
     interface Grain {
         String AMERICAN_2_ROW = "American 2-Row Pale Malt";
         String BELGIAN_2_ROW = "Belgian 2-Row Pale Malt";
-        String PILSEN_2_ROW = "Pilsen 2-Row Malt";
+        String PILSEN_2_ROW = "Pilsen 2-Row Pale Malt";
         String CARAMEL_20L = "Caramel 20L Malt";
         String CARAMEL_40L = "Caramel 40L Malt";
         String CARAMEL_60L = "Caramel 60L Malt";
@@ -18,8 +18,8 @@ public interface Ingredients {
     }
 
     interface Hop {
-        String STYRIAN_GOLDINGS = "Styrian Goldings";
-        String KENT_GOLDINGS = "Kent Goldings";
+        String STYRIAN_GOLDINGS = "Styrian Golding";
+        String KENT_GOLDINGS = "Kent Golding";
         String CASCADE = "Cascade";
         String CITRA = "Citra";
     }
