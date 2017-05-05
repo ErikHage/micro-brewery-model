@@ -9,6 +9,10 @@ public class Ingredient {
     private String name;
     private double quantity;
 
+    public Ingredient() {
+        //for Jackson parsing
+    }
+
     public Ingredient(String name, double quantity) {
         this.name = name;
         this.quantity = quantity;

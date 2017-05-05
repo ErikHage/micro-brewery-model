@@ -17,6 +17,10 @@ public class Recipe {
     private long fermentationDays;
     private long carbonationDays;
 
+    public Recipe() {
+        //for Jackson parsing
+    }
+
     public Recipe(String name, double volume, List<Ingredient> ingredients,
                   long fermentationDays, long carbonationDays) {
         this.name = name;

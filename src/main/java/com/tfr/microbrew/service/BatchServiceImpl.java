@@ -2,14 +2,19 @@ package com.tfr.microbrew.service;
 
 import com.tfr.microbrew.config.BrewStep;
 import com.tfr.microbrew.dao.BatchDao;
-import com.tfr.microbrew.helper.BatchHelper;
 import com.tfr.microbrew.model.Batch;
+import com.tfr.microbrew.model.Recipe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -21,16 +26,20 @@ public class BatchServiceImpl implements BatchService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private BatchDao batchDao;
+    private static final AtomicInteger batchId = new AtomicInteger(1000);    private BatchDao batchDao;
+
+    private static final Map<String, Recipe> RECIPES = new HashMap<>();
 
     @Autowired
-    public BatchServiceImpl(BatchDao batchDao) {
+    public BatchServiceImpl(BatchDao batchDao,
+                            @Qualifier("RecipesList") List<Recipe> recipes) {
         this.batchDao = batchDao;
+        recipes.forEach(r -> RECIPES.put(r.getName(), r));
     }
 
     @Override
     public void addBatch(String recipeName) {
-        Batch batch = BatchHelper.getBatch(recipeName);
+        Batch batch = getBatch(recipeName);
         addBatch(batch);
     }
 
@@ -68,5 +77,18 @@ public class BatchServiceImpl implements BatchService {
     public void deleteBatch(int batchId) {
         Batch batch = new Batch(batchId, null, null, 0);
         batchDao.delete(batch);
+    }
+
+    @Override
+    public Batch getBatch(String recipeName) {
+        if(!RECIPES.containsKey(recipeName)) {
+            String message = String.format("Recipe %s not found", recipeName);
+            logger.error(message);
+            throw new RuntimeException(message);
+        }
+        Recipe recipe = RECIPES.get(recipeName);
+        Batch batch = new Batch(batchId.getAndIncrement(), recipe, BrewStep.TO_BREW, 0);
+        logger.debug(String.format("Created new batch: %s", batch));
+        return batch;
     }
 }

@@ -10,7 +10,7 @@ public interface Ingredients {
     interface Grain {
         String AMERICAN_2_ROW = "American 2-Row Pale Malt";
         String BELGIAN_2_ROW = "Belgian 2-Row Pale Malt";
-        String PILSEN_2_ROW = "Pilsen 2-Row Pale Malt";
+        String PILSEN_2_ROW = "Pilsner 2-Row Pale Malt";
         String CARAMEL_20L = "Caramel 20L Malt";
         String CARAMEL_40L = "Caramel 40L Malt";
         String CARAMEL_60L = "Caramel 60L Malt";

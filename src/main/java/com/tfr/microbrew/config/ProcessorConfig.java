@@ -22,11 +22,14 @@ public class ProcessorConfig {
                                             SalesProcessor salesProcessor,
                                             ReportingProcessor reportingProcessor) {
         Queue<Processor> processors = new LinkedList<>();
+
+        //enqueue in order of execution
         processors.add(inventoryProcessor);
         processors.add(transferProcessor);
         processors.add(brewingProcessor);
         processors.add(salesProcessor);
         processors.add(reportingProcessor);
+
         return processors;
     }
 

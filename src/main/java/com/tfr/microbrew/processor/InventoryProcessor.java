@@ -1,8 +1,8 @@
 package com.tfr.microbrew.processor;
 
 import com.google.common.collect.Sets;
+import com.tfr.microbrew.config.Constants;
 import com.tfr.microbrew.config.DayOfWeek;
-import com.tfr.microbrew.config.InventoryConfig;
 import com.tfr.microbrew.model.InventoryItem;
 import com.tfr.microbrew.service.BatchService;
 import com.tfr.microbrew.service.InventoryService;
@@ -69,7 +69,7 @@ public class InventoryProcessor implements Processor {
     private void checkInventoryLevels() {
         List<InventoryItem> itemsToReorder = inventoryService.getInventory()
                 .stream()
-                .filter(i -> ! i.getCategory().equals(InventoryConfig.Categories.BEER))
+                .filter(i -> ! i.getCategory().equals(Constants.InventoryCategory.BEER))
                 .filter(i -> i.getQuantity() < i.getReorderThreshold())
                 .collect(Collectors.toList());
 

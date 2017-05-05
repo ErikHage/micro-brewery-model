@@ -25,4 +25,6 @@ public interface BatchService {
 
     void deleteBatch(int batchId);
 
+    Batch getBatch(String recipeName);
+
 }
