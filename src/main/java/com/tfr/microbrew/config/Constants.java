@@ -14,7 +14,7 @@ public interface Constants {
     interface RecipeNames {
         String CHECKS_AND_BALANCES_IPA = "Checks and Balances IPA";
         String ROSIES_RED_ALE = "Rosie's Red Ale";
-        String COLD_BREW_COFEE_PORTER = "Cold Brew Coffee Porter";
+        String COLD_BREW_COFFEE_PORTER = "Cold Brew Coffee Porter";
         String TRIPPLECANOE_AND_TYLER_TOO = "Tripplecanoe and Tyler Too";
         String WIT_OF_THEIR_EYES = "Wit of Their Eyes";
         String AMBER_WAVES_OF_GRAIN = "Amber Waves of Grain";
@@ -24,7 +24,7 @@ public interface Constants {
     Set<String> ACTIVE_PRODUCTS = Sets.newHashSet(
             RecipeNames.CHECKS_AND_BALANCES_IPA,
             RecipeNames.ROSIES_RED_ALE,
-            RecipeNames.COLD_BREW_COFEE_PORTER,
+            RecipeNames.COLD_BREW_COFFEE_PORTER,
             RecipeNames.TRIPPLECANOE_AND_TYLER_TOO,
             RecipeNames.WIT_OF_THEIR_EYES,
             RecipeNames.AMBER_WAVES_OF_GRAIN,

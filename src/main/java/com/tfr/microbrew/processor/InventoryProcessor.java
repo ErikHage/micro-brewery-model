@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.tfr.microbrew.config.Constants.ACTIVE_PRODUCTS;
+import static com.tfr.microbrew.config.Constants.BrewHouse.BATCH_SIZE;
 
 /**
  *
@@ -56,7 +57,11 @@ public class InventoryProcessor implements Processor {
         List<String> toBrew = ACTIVE_PRODUCTS.stream()
                 .map(productName -> inventoryService.getItemByName(productName))
                 .filter(Objects::nonNull)
-                .filter(product -> batchService.getByRecipe(product.getName()).size() == 0)
+                .filter(product -> {
+                    int inProgressBatches = batchService.getByRecipe(product.getName()).size();
+                    double currentGallons = (BATCH_SIZE * inProgressBatches) + product.getQuantity();
+                    return currentGallons < product.getReorderThreshold();
+                })
                 .filter(product -> product.getQuantity() < product.getReorderThreshold())
                 .map(InventoryItem::getName)
                 .collect(Collectors.toList());

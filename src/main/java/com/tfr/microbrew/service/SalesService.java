@@ -3,6 +3,7 @@ package com.tfr.microbrew.service;
 import com.tfr.microbrew.model.Sale;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -16,5 +17,11 @@ public interface SalesService {
     void performSale(Sale sale);
 
     int getSales(boolean isFulfilled);
+
+    List<Sale> getSales();
+    List<Sale> getSalesByProduct(String productName);
+    List<Sale> getSalesByFulfillment(boolean isFulfilled);
+
+    Map<String, Long> getUnfulfilledSalesByProduct();
 
 }

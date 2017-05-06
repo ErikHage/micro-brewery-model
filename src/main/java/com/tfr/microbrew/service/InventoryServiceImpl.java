@@ -63,7 +63,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public double getCurrentQuantity(String name) {
-        logger.debug(String.format("Looking up current quantity for item: %s", name));
+//        logger.debug(String.format("Looking up current quantity for item: %s", name));
         InventoryItem inventoryItem;
         try {
             inventoryItem = getItemByName(name);

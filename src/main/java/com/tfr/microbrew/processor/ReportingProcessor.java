@@ -3,6 +3,7 @@ package com.tfr.microbrew.processor;
 import com.google.common.collect.Sets;
 import com.tfr.microbrew.config.BrewStep;
 import com.tfr.microbrew.config.DayOfWeek;
+import com.tfr.microbrew.model.Sale;
 import com.tfr.microbrew.service.BatchService;
 import com.tfr.microbrew.service.InventoryService;
 import com.tfr.microbrew.service.SalesService;
@@ -12,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -57,12 +60,17 @@ public class ReportingProcessor implements Processor {
         sb.append("Sales Report\n");
         sb.append(String.format("\tCompleted Sales  : %s\n", salesService.getSales(true)));
         sb.append(String.format("\tUnfulfilled Sales: %s\n", salesService.getSales(false)));
-        sb.append("\tBy Volume\n");
+//        sb.append("\tBy Volume\n");
 //        salesByVolume.entrySet().forEach(e ->
 //                sb.append(String.format("\t\t%-10s: %s \n", e.getKey(), e.getValue())));
 //        sb.append("\tBy Product\n");
 //        salesByProduct.entrySet().forEach(e ->
 //                sb.append(String.format("\t\t%-30s: %s \n", e.getKey(), e.getValue())));
+
+        sb.append("\tTotal Missed Sales by Product\n");
+        salesService.getUnfulfilledSalesByProduct().entrySet().forEach(e ->
+                sb.append(String.format("\t\t %s: %s \n", e.getKey(), e.getValue())));
+
         logger.debug(sb.toString());
     }
 

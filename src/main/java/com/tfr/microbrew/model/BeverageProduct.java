@@ -13,6 +13,10 @@ public class BeverageProduct {
     private Double price;
     private Double probability;
 
+    public BeverageProduct() {
+        //for Jackson parsing
+    }
+
     public BeverageProduct(BeverageVolume beverageVolume, Double volume, Double price, Double probability) {
         this.beverageVolume = beverageVolume;
         this.volume = volume;

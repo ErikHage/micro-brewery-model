@@ -34,7 +34,8 @@ public class SalesProcessor implements Processor {
     private final InventoryService inventoryService;
 
     @Autowired
-    public SalesProcessor(SalesService salesService, InventoryService inventoryService) {
+    public SalesProcessor(SalesService salesService,
+                          InventoryService inventoryService) {
         this.salesService = salesService;
         this.inventoryService = inventoryService;
     }
@@ -67,9 +68,7 @@ public class SalesProcessor implements Processor {
 
         logger.debug(String.format("Sales Today: %s [%s fulfilled | %s unfulfilled]",
                 numberOfSales, fulfilledSales.get(), unfulfilledSales.get()));
-        //TODO calculate changes in inventory for sales
         //TODO calculate revenues
-        //TODO note any unhappy customers
     }
 
     @Override

@@ -1,8 +1,19 @@
 package com.tfr.microbrew.config;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 import com.tfr.microbrew.model.BeverageProduct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,27 +21,51 @@ import java.util.Map;
  *
  * Created by Erik on 4/24/2017.
  */
-public interface SalesConfig {
+@Configuration
+public class SalesConfig {
 
-    int MAX_SALES = 200;
-    int MIN_SALES = 200;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    double WEEKEND_FACTOR = 1.5;
+    private static final String PRODUCT_DATA_FILE = "config/salesProduct.json";
+    private static final String VOLUME_DATA_FILE = "config/salesVolume.json";
 
-    Map<BeverageVolume, BeverageProduct> BEVERAGE_PRODUCTS = new HashMap<BeverageVolume, BeverageProduct>() {{
-        put(BeverageProducts.PINT.getBeverageVolume(), BeverageProducts.PINT);
-        put(BeverageProducts.SAMPLE.getBeverageVolume(), BeverageProducts.SAMPLE);
-        put(BeverageProducts.FLIGHT.getBeverageVolume(), BeverageProducts.FLIGHT);
-        put(BeverageProducts.HOWLER.getBeverageVolume(), BeverageProducts.HOWLER);
-        put(BeverageProducts.GROWLER.getBeverageVolume(), BeverageProducts.GROWLER);
-    }};
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    interface BeverageProducts {
-        BeverageProduct PINT = new BeverageProduct(BeverageVolume.PINT, 0.125, 6.00, 75.0);
-        BeverageProduct SAMPLE = new BeverageProduct(BeverageVolume.SAMPLE, 0.0625, 3.00, 10.0);
-        BeverageProduct FLIGHT = new BeverageProduct(BeverageVolume.FLIGHT, 0.250, 10.00, 5.0);
-        BeverageProduct HOWLER = new BeverageProduct(BeverageVolume.HOWLER, 0.250, 9.00, 7.0);
-        BeverageProduct GROWLER = new BeverageProduct(BeverageVolume.GROWLER, 0.500, 16.00, 3.0);
+    public final static int MAX_SALES = 200;
+    public final static int MIN_SALES = 200;
+
+    public final static double WEEKEND_FACTOR = 1.5;
+
+    @Bean(name="ProductProbabilities")
+    public Map<String, Double> productProbabilities() {
+        Map<String, Double> probabilityMap;
+
+        try {
+            URL url = Resources.getResource(PRODUCT_DATA_FILE);
+            String json = Resources.toString(url, Charsets.UTF_8);
+            probabilityMap = objectMapper.readValue(json, new TypeReference<Map<String, Double>>(){});
+            logger.debug("Loaded product sale probabilities from " + PRODUCT_DATA_FILE);
+            return probabilityMap;
+        } catch(IOException ex) {
+            logger.error("Error reading config file " + PRODUCT_DATA_FILE, ex);
+            throw new RuntimeException("Error reading config file: " + PRODUCT_DATA_FILE);
+        }
+    }
+
+    @Bean(name="VolumeProbabilities")
+    public List<BeverageProduct> volumeProbabilities() {
+        List<BeverageProduct> probs;
+
+        try {
+            URL url = Resources.getResource(VOLUME_DATA_FILE);
+            String json = Resources.toString(url, Charsets.UTF_8);
+            probs = objectMapper.readValue(json, new TypeReference<List<BeverageProduct>>(){});
+            logger.debug("Loaded product volume probabilities from " + VOLUME_DATA_FILE);
+            return probs;
+        } catch(IOException ex) {
+            logger.error("Error reading config file " + VOLUME_DATA_FILE, ex);
+            throw new RuntimeException("Error reading config file: " + VOLUME_DATA_FILE);
+        }
     }
 
 }

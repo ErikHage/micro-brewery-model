@@ -2,43 +2,43 @@
   {
     "name": "Checks and Balances IPA",
     "category": "Beer",
-    "reorderThreshold": 100,
+    "reorderThreshold": 160,
     "reorderQuantity": 0
   },
   {
     "name": "Rosie's Red Ale",
     "category": "Beer",
-    "reorderThreshold": 60,
+    "reorderThreshold": 40,
     "reorderQuantity": 0
   },
   {
     "name": "Cold Brew Coffee Porter",
     "category": "Beer",
-    "reorderThreshold": 60,
+    "reorderThreshold": 40,
     "reorderQuantity": 0
   },
   {
     "name": "Tripplecanoe and Tyler Too",
     "category": "Beer",
-    "reorderThreshold": 40,
+    "reorderThreshold": 30,
     "reorderQuantity": 0
   },
   {
     "name": "Wit of Their Eyes",
     "category": "Beer",
-    "reorderThreshold": 60,
+    "reorderThreshold": 30,
     "reorderQuantity": 0
   },
   {
     "name": "Amber Waves of Grain",
     "category": "Beer",
-    "reorderThreshold": 60,
+    "reorderThreshold": 30,
     "reorderQuantity": 0
   },
   {
     "name": "Summer SMaSH IPA",
     "category": "Beer",
-    "reorderThreshold": 60,
+    "reorderThreshold": 30,
     "reorderQuantity": 0
   },
 
