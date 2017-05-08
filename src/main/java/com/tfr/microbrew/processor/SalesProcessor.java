@@ -54,6 +54,7 @@ public class SalesProcessor implements Processor {
 
         //attempt to fulfill Sales
         sales.forEach(s -> {
+            s.setDateOfSale(date);
             if(inventoryService.getCurrentQuantity(s.getProductName()) > s.getBeverageProduct().getVolume()) {
                 inventoryService.updateQuantity(s.getProductName(),
                         s.getBeverageProduct().getVolume()*(-1));

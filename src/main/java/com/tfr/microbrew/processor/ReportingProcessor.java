@@ -101,6 +101,8 @@ public class ReportingProcessor implements Processor {
         List<Batch> batches = new ArrayList<>(batchService.getAllInProgress());
         List<Sale> sales = salesService.getSalesByDate(date);
 
+        logger.debug("SaveContext: Sales returned: " + sales.size());
+
         Context context = new Context(date, inventoryItems, batches, sales);
 
         checkContextDirectory();

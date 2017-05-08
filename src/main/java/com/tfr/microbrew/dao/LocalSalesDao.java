@@ -31,6 +31,9 @@ public class LocalSalesDao implements SalesDao {
 
     @Override
     public List<Sale> readByDate(LocalDate date) {
+        if(!SALES.containsKey(date)) {
+            return Collections.emptyList();
+        }
         return SALES.get(date);
     }
 
