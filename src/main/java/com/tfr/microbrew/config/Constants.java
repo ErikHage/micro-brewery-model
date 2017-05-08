@@ -47,6 +47,7 @@ public interface Constants {
     }
 
     Set<DayOfWeek> BREW_DAYS = Sets.newHashSet(
+//            DayOfWeek.FRIDAY,
             DayOfWeek.SATURDAY,
             DayOfWeek.SUNDAY
     );

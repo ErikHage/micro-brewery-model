@@ -1,20 +1,18 @@
 package com.tfr.microbrew.config;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
 import com.tfr.microbrew.model.BeverageProduct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.IOException;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.tfr.microbrew.config.BeverageVolume.*;
+import static com.tfr.microbrew.config.Constants.RecipeNames.*;
 
 /**
  *
@@ -26,11 +24,6 @@ public class SalesConfig {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static final String PRODUCT_DATA_FILE = "config/salesProduct.json";
-    private static final String VOLUME_DATA_FILE = "config/salesVolume.json";
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     public final static int MAX_SALES = 200;
     public final static int MIN_SALES = 200;
 
@@ -38,34 +31,33 @@ public class SalesConfig {
 
     @Bean(name="ProductProbabilities")
     public Map<String, Double> productProbabilities() {
-        Map<String, Double> probabilityMap;
+        Map<String, Double> probabilityMap = new HashMap<>();
 
-        try {
-            URL url = Resources.getResource(PRODUCT_DATA_FILE);
-            String json = Resources.toString(url, Charsets.UTF_8);
-            probabilityMap = objectMapper.readValue(json, new TypeReference<Map<String, Double>>(){});
-            logger.debug("Loaded product sale probabilities from " + PRODUCT_DATA_FILE);
-            return probabilityMap;
-        } catch(IOException ex) {
-            logger.error("Error reading config file " + PRODUCT_DATA_FILE, ex);
-            throw new RuntimeException("Error reading config file: " + PRODUCT_DATA_FILE);
-        }
+        probabilityMap.put(CHECKS_AND_BALANCES_IPA, 30.0);
+        probabilityMap.put(ROSIES_RED_ALE, 15.0);
+        probabilityMap.put(COLD_BREW_COFFEE_PORTER, 15.0);
+        probabilityMap.put(TRIPPLECANOE_AND_TYLER_TOO, 10.0);
+        probabilityMap.put(WIT_OF_THEIR_EYES, 10.0);
+        probabilityMap.put(AMBER_WAVES_OF_GRAIN, 10.0);
+        probabilityMap.put(SUMMER_SMASH_IPA, 10.0);
+
+        logger.debug("Loaded product sale probabilities.");
+        return probabilityMap;
     }
 
     @Bean(name="VolumeProbabilities")
     public List<BeverageProduct> volumeProbabilities() {
-        List<BeverageProduct> probs;
+        List<BeverageProduct> probabilities = new ArrayList<>();
 
-        try {
-            URL url = Resources.getResource(VOLUME_DATA_FILE);
-            String json = Resources.toString(url, Charsets.UTF_8);
-            probs = objectMapper.readValue(json, new TypeReference<List<BeverageProduct>>(){});
-            logger.debug("Loaded product volume probabilities from " + VOLUME_DATA_FILE);
-            return probs;
-        } catch(IOException ex) {
-            logger.error("Error reading config file " + VOLUME_DATA_FILE, ex);
-            throw new RuntimeException("Error reading config file: " + VOLUME_DATA_FILE);
-        }
+        probabilities.add(new BeverageProduct(PINT, 0.125, 6.00, 75.0));
+        probabilities.add(new BeverageProduct(SAMPLE, 0.0625, 3.00, 10.0));
+        probabilities.add(new BeverageProduct(FLIGHT, 0.25, 6.00, 7.0));
+        probabilities.add(new BeverageProduct(HOWLER, 0.25, 6.00, 5.0));
+        probabilities.add(new BeverageProduct(GROWLER, 0.5, 6.00, 3.0));
+
+        logger.debug("Loaded product volume probabilities");
+        return probabilities;
+
     }
 
 }
