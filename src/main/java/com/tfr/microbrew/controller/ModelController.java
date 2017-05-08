@@ -1,5 +1,6 @@
 package com.tfr.microbrew.controller;
 
+import com.tfr.microbrew.config.ContextId;
 import com.tfr.microbrew.config.DayOfWeek;
 import com.tfr.microbrew.model.InitialParameters;
 import com.tfr.microbrew.processor.*;
@@ -26,12 +27,15 @@ public class ModelController {
 
     private InventoryService inventoryService;
     private ProcessDefinition processDefinition;
+    private ContextId contextId;
 
     @Autowired
     public ModelController(InventoryService inventoryService,
-                           ProcessDefinition processDefinition) {
+                           ProcessDefinition processDefinition,
+                           ContextId contextId) {
         this.inventoryService = inventoryService;
         this.processDefinition = processDefinition;
+        this.contextId = contextId;
     }
 
     public void runModel(InitialParameters initialParameters) {
@@ -52,6 +56,9 @@ public class ModelController {
 
     private void setInitialContext(InitialParameters initialParameters) {
         logger.debug("Initializing starting state");
+        long runId = System.currentTimeMillis();
+        contextId.setContextId(runId);
+        logger.debug("Setting contextId to: " + contextId.getContextId());
         initialParameters.getInitialInventory().entrySet().forEach(e ->
                 inventoryService.updateQuantity(e.getKey(), e.getValue()));
         logger.debug("Starting state initialized");

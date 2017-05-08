@@ -1,6 +1,7 @@
 package com.tfr.microbrew.service;
 
 import com.tfr.microbrew.model.Sale;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ public interface SalesService {
     List<Sale> getSales();
     List<Sale> getSalesByProduct(String productName);
     List<Sale> getSalesByFulfillment(boolean isFulfilled);
+    List<Sale> getSalesByDate(LocalDate date);
 
     Map<String, Long> getUnfulfilledSalesByProduct();
 

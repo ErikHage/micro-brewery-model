@@ -6,6 +6,7 @@ import com.tfr.microbrew.dao.SalesDao;
 import com.tfr.microbrew.model.BeverageProduct;
 import com.tfr.microbrew.model.Sale;
 import com.tfr.microbrew.probability.NormalizedProbability;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,11 @@ public class SalesServiceImpl implements SalesService {
     @Override
     public List<Sale> getSalesByFulfillment(boolean isFulfilled) {
         return salesDao.readByFulfilled(isFulfilled);
+    }
+
+    @Override
+    public List<Sale> getSalesByDate(LocalDate date) {
+        return salesDao.readByDate(date);
     }
 
     @Override

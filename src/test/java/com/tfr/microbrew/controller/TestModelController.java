@@ -30,7 +30,7 @@ public class TestModelController {
     public void test() {
         InitialParameters initialParameters = new InitialParameters();
         initialParameters.setStartDate(new LocalDate(2017, 4, 1));
-        initialParameters.setEndDate(new LocalDate(2017, 10, 1));
+        initialParameters.setEndDate(new LocalDate(2017, 5, 1));
 
         Map<String, Double> initialInventory = new HashMap<String, Double>() {{
             put(RecipeNames.CHECKS_AND_BALANCES_IPA, 150.0);
