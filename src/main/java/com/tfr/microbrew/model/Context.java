@@ -1,5 +1,9 @@
 package com.tfr.microbrew.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tfr.microbrew.model.serialize.LocalDateJsonDeserializer;
+import com.tfr.microbrew.model.serialize.LocalDateJsonSerializer;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -10,7 +14,10 @@ import java.util.List;
  */
 public class Context {
 
+    @JsonDeserialize(using = LocalDateJsonDeserializer.class)
+    @JsonSerialize(using = LocalDateJsonSerializer.class)
     private LocalDate date;
+
     private List<InventoryItem> inventory;
     private List<Batch> batches;
     private List<Sale> sales;
