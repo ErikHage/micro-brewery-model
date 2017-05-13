@@ -1,0 +1,100 @@
+package com.tfr.microbrew.controller;
+
+import com.tfr.microbrew.config.Routes;
+import com.tfr.microbrew.config.Views;
+import com.tfr.microbrew.helper.ContextHelper;
+import com.tfr.microbrew.model.Context;
+import com.tfr.microbrew.model.ViewContext;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.io.FileNotFoundException;
+import java.util.List;
+
+/**
+ *
+ * Created by Erik Hage on 5/13/2017.
+ */
+@Controller
+public class ViewController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private final DateTimeFormatter dateFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+
+    @RequestMapping(value = Routes.INDEX,
+                    method = RequestMethod.GET)
+    public String index(Model model) {
+        logger.debug("Request to " + Routes.INDEX);
+
+        List<String> contextIds = ContextHelper.getContextIds();
+
+        model.addAttribute("contextIds", contextIds);
+
+        return Views.INDEX_TEMPLATE;
+    }
+
+    @RequestMapping(value = Routes.DAY_VIEW_START,
+                    method = RequestMethod.GET)
+    public String dayViewStart(Model model,
+                               @PathVariable("contextId") String contextId) {
+        Context context = null;
+        try {
+            context = ContextHelper.getInitialContextData(contextId);
+        } catch (FileNotFoundException e) {
+            //TODO handle error
+        }
+
+        LocalDate date = context.getDate();
+        LocalDate previousDate = date.minusDays(1);
+        LocalDate nextDate = date.plusDays(1);
+
+        model.addAttribute("contextId", contextId);
+        model.addAttribute("currentDate", date.toString(dateFormatter));
+        model.addAttribute("previousDate", previousDate.toString(dateFormatter));
+        model.addAttribute("nextDate", nextDate.toString(dateFormatter));
+        model.addAttribute("viewContext", new ViewContext(context));
+
+        return Views.DAY_VIEW_TEMPLATE;
+    }
+
+    @RequestMapping(value = Routes.DAY_VIEW,
+                    method = RequestMethod.GET)
+    public String dayView(Model model,
+                          @PathVariable("contextId") String contextId,
+                          @PathVariable("date") String dateString) {
+        LocalDate date = LocalDate.parse(dateString, dateFormatter);
+        LocalDate previousDate = date.minusDays(1);
+        LocalDate nextDate = date.plusDays(1);
+
+        ViewContext viewContext = getViewContext(contextId, dateString);
+
+        model.addAttribute("contextId", contextId);
+        model.addAttribute("currentDate", dateString);
+        model.addAttribute("previousDate", previousDate.toString(dateFormatter));
+        model.addAttribute("nextDate", nextDate.toString(dateFormatter));
+        model.addAttribute("viewContext", viewContext);
+
+        return Views.DAY_VIEW_TEMPLATE;
+    }
+
+    private ViewContext getViewContext(String contextId, String date) {
+        Context context = null;
+        try {
+            context = ContextHelper.getContextData(contextId, date);
+        } catch (FileNotFoundException e) {
+            //TODO handle error
+        }
+        return new ViewContext(context);
+    }
+
+
+}

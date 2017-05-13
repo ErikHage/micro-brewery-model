@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/imports :: imports"></div>
+    <div th:replace="fragments/imports :: style-custom"></div>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Index</title>
+</head>
+<body>
+
+    <div class="text-center">
+        <h3>Choose a context to explore</h3>
+    </div>
+    <hr />
+    <div class="text-center" th:each="contextId : ${contextIds}" >
+        <a th:text="${contextId}" th:href="'/microbrew/dayView/' + ${contextId}"></a>
+        <br />
+    </div>
+
+</body>
+<footer>
+    <div th:replace="fragments/footer :: footer"></div>
+</footer>
+</html>

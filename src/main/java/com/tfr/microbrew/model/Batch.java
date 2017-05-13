@@ -14,6 +14,10 @@ public class Batch {
     private BrewStep currentStep;
     private int daysInStep;
 
+    public Batch() {
+        //for Jackson parsing
+    }
+
     public Batch(int batchId, Recipe recipe, BrewStep currentStep, int daysInStep) {
         this.batchId = batchId;
         this.recipe = recipe;

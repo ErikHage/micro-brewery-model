@@ -22,6 +22,10 @@ public class Context {
     private List<Batch> batches;
     private List<Sale> sales;
 
+    public Context() {
+        //for Jackson parsing
+    }
+
     public Context(LocalDate date, List<InventoryItem> inventory, List<Batch> batches, List<Sale> sales) {
         this.date = date;
         this.inventory = inventory;

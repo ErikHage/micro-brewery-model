@@ -23,6 +23,10 @@ public class Sale {
     private boolean isFulfilled;
     private String notFulfilledReason;
 
+    public Sale() {
+        //for Jackson parsing
+    }
+
     public Sale(LocalDate dateOfSale, BeverageProduct beverageProduct, String productName) {
         this.dateOfSale = dateOfSale;
         this.beverageProduct = beverageProduct;

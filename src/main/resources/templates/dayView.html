@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/imports :: imports"></div>
+    <div th:replace="fragments/imports :: style-custom"></div>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:text="'Overview for date ' + ${currentDate}"></title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-2">
+                <a th:text="previous" th:href="@{'/dayView/' + ${contextId} + '/' + ${previousDate}}"></a>
+            </div>
+            <div class="col-xs-8">
+                <div class="text-center">
+                    <h2>Overview</h2>
+                    <h3 th:text="'Context: ' + ${contextId}"></h3>
+                    <h3 th:text="'Date: ' + ${currentDate}"></h3>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <a th:text="next" th:href="@{'/dayView/' + ${contextId} + '/' + ${nextDate}}"></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <h4>Inventory</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Reorder Threshold</th>
+                            <th>Reorder Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="inventoryItem : ${viewContext.context.inventory}">
+                            <td th:text="${inventoryItem.name}"></td>
+                            <td th:text="${inventoryItem.category}"></td>
+                            <td th:text="${inventoryItem.quantity}"></td>
+                            <td th:text="${inventoryItem.reorderThreshold}"></td>
+                            <td th:text="${inventoryItem.reorderQuantity}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-6">
+                <h4>Batches in Progress</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Batch id</th>
+                            <th>Recipe</th>
+                            <th>Current Step</th>
+                            <th>Days in Step</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="batch : ${viewContext.context.batches}">
+                            <td th:text="${batch.batchId}"></td>
+                            <td th:text="${batch.recipe.name}"></td>
+                            <td th:text="${batch.currentStep}"></td>
+                            <td th:text="${batch.daysInStep}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<footer>
+    <div th:replace="fragments/footer :: footer"></div>
+</footer>
+</html>
