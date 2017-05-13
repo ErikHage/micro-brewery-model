@@ -10,4 +10,6 @@ public interface Views {
 
     String DAY_VIEW_TEMPLATE = "dayView";
 
+    String ERROR_PAGE = "error";
+
 }

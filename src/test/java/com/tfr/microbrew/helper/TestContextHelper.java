@@ -3,6 +3,7 @@ package com.tfr.microbrew.helper;
 import com.tfr.microbrew.model.Context;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -24,7 +25,7 @@ public class TestContextHelper {
     }
 
     @Test
-    public void getInitialContextData() {
+    public void getInitialContextData() throws FileNotFoundException {
         Context context = ContextHelper.getInitialContextData("test2");
 
         assertNotNull(context);
@@ -36,7 +37,7 @@ public class TestContextHelper {
     }
 
     @Test
-    public void testGetContextData() {
+    public void testGetContextData() throws FileNotFoundException {
         Context context = ContextHelper.getContextData("test","2017-04-01");
 
         assertNotNull(context);

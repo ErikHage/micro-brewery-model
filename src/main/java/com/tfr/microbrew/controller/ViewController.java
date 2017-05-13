@@ -50,7 +50,9 @@ public class ViewController {
         try {
             context = ContextHelper.getInitialContextData(contextId);
         } catch (FileNotFoundException e) {
-            //TODO handle error
+            String message = "Invalid Context: " + contextId;
+            model.addAttribute("message", message);
+            return Views.ERROR_PAGE;
         }
 
         LocalDate date = context.getDate();
@@ -71,11 +73,19 @@ public class ViewController {
     public String dayView(Model model,
                           @PathVariable("contextId") String contextId,
                           @PathVariable("date") String dateString) {
+        Context context;
+        try {
+            context = ContextHelper.getContextData(contextId, dateString);
+        } catch (FileNotFoundException e) {
+            String message = "Date outside of Context range: " + contextId;
+            model.addAttribute("message", message);
+            return Views.ERROR_PAGE;
+        }
+
         LocalDate date = LocalDate.parse(dateString, dateFormatter);
         LocalDate previousDate = date.minusDays(1);
         LocalDate nextDate = date.plusDays(1);
-
-        ViewContext viewContext = getViewContext(contextId, dateString);
+        ViewContext viewContext = new ViewContext(context);
 
         model.addAttribute("contextId", contextId);
         model.addAttribute("currentDate", dateString);
@@ -86,15 +96,7 @@ public class ViewController {
         return Views.DAY_VIEW_TEMPLATE;
     }
 
-    private ViewContext getViewContext(String contextId, String date) {
-        Context context = null;
-        try {
-            context = ContextHelper.getContextData(contextId, date);
-        } catch (FileNotFoundException e) {
-            //TODO handle error
-        }
-        return new ViewContext(context);
-    }
+
 
 
 }
