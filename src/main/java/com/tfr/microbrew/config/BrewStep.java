@@ -7,9 +7,18 @@ package com.tfr.microbrew.config;
  */
 public enum BrewStep {
 
-    TO_BREW,
-    FERMENT,
-    CARBONATE,
-    PACKAGE;
+    TO_BREW("TO_BREW"),
+    FERMENT("FERMENT"),
+    CARBONATE("CARBONATE"),
+    PACKAGE("PACKAGE");
 
+    private final String value;
+
+    BrewStep(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

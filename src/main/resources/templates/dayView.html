@@ -32,7 +32,6 @@
                 </ul>
                 <div class="tab-content">
                     <div id="inventory" class="tab-pane active">
-                        <h4>Inventory</h4>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -55,31 +54,76 @@
                         </table>
                     </div>
                     <div id="batches" class="tab-pane">
-                        <h4>Batches in Progress</h4>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Batch id</th>
-                                    <th>Recipe</th>
-                                    <th>Current Step</th>
-                                    <th>Days in Step</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="batch : ${viewContext.context.batches}">
-                                    <td th:text="${batch.batchId}"></td>
-                                    <td th:text="${batch.recipe.name}"></td>
-                                    <td th:text="${batch.currentStep}"></td>
-                                    <td th:text="${batch.daysInStep}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="row text-center">
+                            <div class="col-xs-6">
+                                <h4>Batches in Progress</h4>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Batch id</th>
+                                            <th>Recipe</th>
+                                            <th>Current Step</th>
+                                            <th>Days in Step</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="batch : ${viewContext.context.batches}">
+                                            <td th:text="${batch.batchId}"></td>
+                                            <td th:text="${batch.recipe.name}"></td>
+                                            <td th:text="${batch.currentStep}"></td>
+                                            <td th:text="${batch.daysInStep}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-3">
+                                <h4>By Step</h4>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Step</th>
+                                            <th>Count</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="productEntry: ${viewContext.batchesByStep}">
+                                            <td th:text="${productEntry.key}"></td>
+                                            <td th:text="${productEntry.value}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>TOTAL</td>
+                                            <td th:text="${viewContext.totalBatches}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-3">
+                                <h4>By Product</h4>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Count</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="productEntry: ${viewContext.batchesByProduct}">
+                                        <td th:text="${productEntry.key}"></td>
+                                        <td th:text="${productEntry.value}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>TOTAL</td>
+                                        <td th:text="${viewContext.totalBatches}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <div id="sales" class="tab-pane">
-                        <h4>Sales</h4>
                         <div class="row text-center">
                             <div class="col-xs-4">
-                                <h5>Sales by Product</h5>
+                                <h4>Sales by Product</h4>
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -100,7 +144,7 @@
                                 </table>
                             </div>
                             <div class="col-xs-4">
-                                <h5>Fulfilled Sales by Product</h5>
+                                <h4>Fulfilled Sales by Product</h4>
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -121,7 +165,7 @@
                                 </table>
                             </div>
                             <div class="col-xs-4">
-                                <h5>Unfulfilled Sales by Product</h5>
+                                <h4>Unfulfilled Sales by Product</h4>
                                 <table class="table">
                                     <thead>
                                         <tr>

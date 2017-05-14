@@ -11,6 +11,11 @@ public class ViewContext {
 
     private final Context context;
 
+    private final Map<String, Long> batchesByProduct;
+    private final Map<String, Long> batchesByStep;
+
+    private final int totalBatches;
+
     private final Map<String, Long> salesByProduct;
     private final Map<String, Long> fulfilledSalesByProduct;
     private final Map<String, Long> unfulfilledSalesByProduct;
@@ -19,8 +24,20 @@ public class ViewContext {
     private final int totalFulfilledSales;
     private final int totalUnfulfilledSales;
 
+
+
     public ViewContext(Context context) {
         this.context = context;
+
+        this.batchesByProduct = context.getBatches().stream()
+                .collect(Collectors.groupingBy(e -> e.getRecipe().getName(),
+                        Collectors.counting()));
+
+        this.batchesByStep = context.getBatches().stream()
+                .collect(Collectors.groupingBy(e -> e.getCurrentStep().getValue(),
+                        Collectors.counting()));
+
+        this.totalBatches = context.getBatches().size();
 
         this.salesByProduct = context.getSales().stream()
                 .collect(Collectors.groupingBy(Sale::getProductName, Collectors.counting()));
@@ -69,5 +86,17 @@ public class ViewContext {
 
     public int getTotalUnfulfilledSales() {
         return totalUnfulfilledSales;
+    }
+
+    public Map<String, Long> getBatchesByProduct() {
+        return batchesByProduct;
+    }
+
+    public int getTotalBatches() {
+        return totalBatches;
+    }
+
+    public Map<String, Long> getBatchesByStep() {
+        return batchesByStep;
     }
 }
