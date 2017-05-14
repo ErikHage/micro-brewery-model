@@ -4,6 +4,8 @@
     <div th:replace="fragments/imports :: imports"></div>
     <div th:replace="fragments/imports :: style-custom"></div>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title th:text="'Overview for date ' + ${currentDate}"></title>
 </head>
@@ -11,15 +13,22 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12 text-center">
-                <a th:text="previous" th:href="@{'/dayView/' + ${contextId} + '/' + ${previousDate}}"></a>
-                |
-                <a th:text="next" th:href="@{'/dayView/' + ${contextId} + '/' + ${nextDate}}"></a>
+                <a href="/index" th:href="@{${T(com.tfr.microbrew.config.Routes).INDEX}}">Index</a><br />
             </div>
             <div class="col-xs-12">
-                <div class="text-center">
-                    <h2>Overview</h2>
-                    <h3 th:text="'Context: ' + ${contextId}"></h3>
-                    <h3 th:text="'Date: ' + ${currentDate}"></h3>
+                <div class="page-header">
+                    <h2 class="text-center" th:text="'Context: ' + ${contextId}"></h2>
+                    <div class="row">
+                        <div class="col-xs-5 text-right">
+                            <a th:href="@{'/dayView/' + ${contextId} + '/' + ${previousDate}}"><i class="fa fa-backward fa-3x" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="col-xs-2 text-center">
+                            <h3 th:text="'Date: ' + ${currentDate}"></h3>
+                        </div>
+                        <div class="col-xs-5 text-left">
+                            <a th:href="@{'/dayView/' + ${contextId} + '/' + ${nextDate}}"><i class="fa fa-forward fa-3x" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
