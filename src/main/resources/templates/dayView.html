@@ -19,14 +19,12 @@
                 <div class="page-header">
                     <h2 class="text-center" th:text="'Context: ' + ${contextId}"></h2>
                     <div class="row">
-                        <div class="col-xs-5 text-right">
-                            <a th:href="@{'/dayView/' + ${contextId} + '/' + ${previousDate}}"><i class="fa fa-backward fa-3x" aria-hidden="true"></i></a>
-                        </div>
-                        <div class="col-xs-2 text-center">
-                            <h3 th:text="'Date: ' + ${currentDate}"></h3>
-                        </div>
-                        <div class="col-xs-5 text-left">
-                            <a th:href="@{'/dayView/' + ${contextId} + '/' + ${nextDate}}"><i class="fa fa-forward fa-3x" aria-hidden="true"></i></a>
+                        <div class="col-xs-12 text-center">
+                            <h3>
+                                <a th:href="@{'/dayView/' + ${contextId} + '/' + ${previousDate}}"><i class="fa fa-backward" aria-hidden="true"></i></a>
+                                <span th:text="'Date: ' + ${currentDate}"></span>
+                                <a th:href="@{'/dayView/' + ${contextId} + '/' + ${nextDate}}"><i class="fa fa-forward" aria-hidden="true"></i></a>
+                            </h3>
                         </div>
                     </div>
                 </div>
