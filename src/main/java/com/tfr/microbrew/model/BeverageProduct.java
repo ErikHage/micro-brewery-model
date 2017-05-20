@@ -10,17 +10,15 @@ public class BeverageProduct {
 
     private BeverageVolume beverageVolume;
     private Double volume;
-    private Double price;
     private Double probability;
 
     public BeverageProduct() {
         //for Jackson parsing
     }
 
-    public BeverageProduct(BeverageVolume beverageVolume, Double volume, Double price, Double probability) {
+    public BeverageProduct(BeverageVolume beverageVolume, Double volume, Double probability) {
         this.beverageVolume = beverageVolume;
         this.volume = volume;
-        this.price = price;
         this.probability = probability;
     }
 
@@ -33,7 +31,6 @@ public class BeverageProduct {
 
         if (beverageVolume != that.beverageVolume) return false;
         if (volume != null ? !volume.equals(that.volume) : that.volume != null) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
         return probability != null ? probability.equals(that.probability) : that.probability == null;
     }
 
@@ -41,7 +38,6 @@ public class BeverageProduct {
     public int hashCode() {
         int result = beverageVolume != null ? beverageVolume.hashCode() : 0;
         result = 31 * result + (volume != null ? volume.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (probability != null ? probability.hashCode() : 0);
         return result;
     }
@@ -51,7 +47,6 @@ public class BeverageProduct {
         return "BeverageProduct{" +
                 "beverageVolume=" + beverageVolume +
                 ", volume=" + volume +
-                ", price=" + price +
                 ", probability=" + probability +
                 '}';
     }
@@ -70,14 +65,6 @@ public class BeverageProduct {
 
     public void setVolume(Double volume) {
         this.volume = volume;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public Double getProbability() {

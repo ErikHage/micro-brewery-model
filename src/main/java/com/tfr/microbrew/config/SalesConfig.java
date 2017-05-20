@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.tfr.microbrew.config.BeverageVolume.*;
 
@@ -38,12 +40,12 @@ public class SalesConfig {
     }
 
     @Bean(name="ProductProbabilities")
-    public NormalizedProbability<String> productProbabilities() {
-        NormalizedProbability<String> productProbability =
+    public NormalizedProbability<Recipe> productProbabilities() {
+        NormalizedProbability<Recipe> productProbability =
                 new NormalizedProbability<>();
 
         recipes.forEach(r -> {
-            productProbability.add(r.getSaleProbability(), r.getName());
+            productProbability.add(r.getSaleProbability(), r);
             logger.debug(String.format("Probability of sale of product: %-6s= %s",
                     r.getSaleProbability(), r.getName()));
         });
@@ -51,14 +53,14 @@ public class SalesConfig {
         return productProbability;
     }
 
-    @Bean("BeverageProducts")
+    @Bean(name="BeverageProducts")
     public List<BeverageProduct> beverageProducts() {
         return Lists.newArrayList(
-                new BeverageProduct(PINT, 0.125, 6.00,75.0),
-                new BeverageProduct(SAMPLE, 0.0625, 3.00, 10.0),
-                new BeverageProduct(FLIGHT, 0.25, 6.00, 7.0),
-                new BeverageProduct(HOWLER, 0.25, 6.00, 5.0),
-                new BeverageProduct(GROWLER, 0.5, 6.00, 3.0)
+                new BeverageProduct(PINT, 0.125, 75.0),
+                new BeverageProduct(SAMPLE, 0.0625, 10.0),
+                new BeverageProduct(FLIGHT, 0.25, 7.0),
+                new BeverageProduct(HOWLER, 0.25, 5.0),
+                new BeverageProduct(GROWLER, 0.5, 3.0)
         );
     }
 
@@ -75,6 +77,19 @@ public class SalesConfig {
 
         logger.debug("Loaded product volume probabilities");
         return volumeProbability;
+    }
+
+    @Bean(name="VolumeFactors")
+    public Map<BeverageVolume, Double> volumeFactors() {
+        Map<BeverageVolume, Double> volumeFactors = new HashMap<>();
+
+        volumeFactors.put(PINT, 1.0);
+        volumeFactors.put(SAMPLE, 3.0/6.0);
+        volumeFactors.put(FLIGHT, 10.0/6.0);
+        volumeFactors.put(HOWLER, 10.0/6.0);
+        volumeFactors.put(GROWLER, 16.0/6.0);
+
+        return volumeFactors;
     }
 
 }

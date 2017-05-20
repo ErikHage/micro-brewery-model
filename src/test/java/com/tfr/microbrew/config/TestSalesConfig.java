@@ -33,7 +33,7 @@ public class TestSalesConfig {
 
     @Test
     public void testProductProbability_ValuesPopulated() {
-        assertNotNull(productProbabilities.get(Constants.RecipeNames.CHECKS_AND_BALANCES_IPA));
+        assertNotNull(productProbabilities.get("C"));
     }
 
     @Autowired
@@ -51,7 +51,6 @@ public class TestSalesConfig {
         BeverageProduct product = volumeProbabilities.get(0);
         assertEquals(BeverageVolume.PINT, product.getBeverageVolume());
         assertEquals(0.125, product.getVolume(), 0.01);
-        assertEquals(6.0, product.getPrice(), 0.01);
         assertEquals(75.0, product.getProbability(), 0.01);
     }
 

@@ -21,6 +21,8 @@ public class Recipe {
 
     private double saleProbability;
 
+    private double pintPrice;
+
     public Recipe() {
         //for Jackson parsing
     }
@@ -50,6 +52,7 @@ public class Recipe {
                 ", carbonationDays=" + carbonationDays +
                 ", isActive=" + isActive +
                 ", saleProbability=" + saleProbability +
+                ", pintPrice=" + pintPrice +
                 '}';
     }
 
@@ -107,5 +110,13 @@ public class Recipe {
 
     public void setSaleProbability(double saleProbability) {
         this.saleProbability = saleProbability;
+    }
+
+    public double getPintPrice() {
+        return pintPrice;
+    }
+
+    public void setPintPrice(double pintPrice) {
+        this.pintPrice = pintPrice;
     }
 }

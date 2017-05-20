@@ -23,20 +23,23 @@ public class Sale {
     private boolean isFulfilled;
     private String notFulfilledReason;
 
+    private double price;
+
     public Sale() {
         //for Jackson parsing
     }
 
-    public Sale(LocalDate dateOfSale, BeverageProduct beverageProduct, String productName) {
+    public Sale(LocalDate dateOfSale, BeverageProduct beverageProduct, String productName, double price) {
         this.dateOfSale = dateOfSale;
         this.beverageProduct = beverageProduct;
         this.productName = productName;
+        this.price = price;
         this.isFulfilled = false;
         this.notFulfilledReason = "";
     }
 
-    public Sale(BeverageProduct beverageProduct, String productName) {
-        this(null, beverageProduct, productName);
+    public Sale(BeverageProduct beverageProduct, String productName, double price) {
+        this(null, beverageProduct, productName, price);
     }
 
     @Override
@@ -47,6 +50,7 @@ public class Sale {
                 ", productName='" + productName + '\'' +
                 ", isFulfilled=" + isFulfilled +
                 ", notFulfilledReason='" + notFulfilledReason + '\'' +
+                ", price=" + price +
                 '}';
     }
 
@@ -88,5 +92,13 @@ public class Sale {
 
     public void setNotFulfilledReason(String notFulfilledReason) {
         this.notFulfilledReason = notFulfilledReason;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

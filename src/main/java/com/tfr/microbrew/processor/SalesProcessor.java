@@ -3,7 +3,9 @@ package com.tfr.microbrew.processor;
 import com.tfr.microbrew.config.Constants;
 import com.tfr.microbrew.config.DayOfWeek;
 import com.tfr.microbrew.config.SalesConfig;
+import com.tfr.microbrew.model.Cashflow;
 import com.tfr.microbrew.model.Sale;
+import com.tfr.microbrew.service.CashflowService;
 import com.tfr.microbrew.service.InventoryService;
 import com.tfr.microbrew.service.SalesService;
 import org.joda.time.LocalDate;
@@ -29,12 +31,15 @@ public class SalesProcessor implements Processor {
 
     private final SalesService salesService;
     private final InventoryService inventoryService;
+    private final CashflowService cashflowService;
 
     @Autowired
     public SalesProcessor(SalesService salesService,
-                          InventoryService inventoryService) {
+                          InventoryService inventoryService,
+                          CashflowService cashflowService) {
         this.salesService = salesService;
         this.inventoryService = inventoryService;
+        this.cashflowService = cashflowService;
     }
 
     @Override
@@ -62,11 +67,11 @@ public class SalesProcessor implements Processor {
                 unfulfilledSales.getAndIncrement();
             }
             salesService.performSale(s);
+            cashflowService.saveCashflow(new Cashflow(date, s.getPrice()));
         });
 
         logger.debug(String.format("Sales Today: %s [%s fulfilled | %s unfulfilled]",
                 numberOfSales, fulfilledSales.get(), unfulfilledSales.get()));
-        //TODO calculate revenues
     }
 
     @Override

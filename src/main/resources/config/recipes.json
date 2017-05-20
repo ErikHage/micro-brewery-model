@@ -6,6 +6,7 @@
     "carbonationDays": 2,
     "active": true,
     "saleProbability": 30.0,
+    "pintPrice" : 6.0,
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",
@@ -40,6 +41,7 @@
     "carbonationDays": 2,
     "active": true,
     "saleProbability": 15.0,
+    "pintPrice" : 6.0,
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",
@@ -70,6 +72,7 @@
     "carbonationDays": 1,
     "active": true,
     "saleProbability": 15.0,
+    "pintPrice" : 6.0,
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",
@@ -100,6 +103,7 @@
     "carbonationDays": 2,
     "active": true,
     "saleProbability": 10.0,
+    "pintPrice" : 7.0,
     "ingredients": [
       {
         "name": "Belgian 2-Row Pale Malt",
@@ -134,6 +138,7 @@
     "carbonationDays": 2,
     "active": true,
     "saleProbability": 10.0,
+    "pintPrice" : 6.0,
     "ingredients": [
       {
         "name": "Pilsner 2-Row Pale Malt",
@@ -164,6 +169,7 @@
     "carbonationDays": 2,
     "active": true,
     "saleProbability": 10.0,
+    "pintPrice" : 6.0,
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",
@@ -194,6 +200,7 @@
     "carbonationDays": 2,
     "active": true,
     "saleProbability": 10.0,
+    "pintPrice" : 6.0,
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",

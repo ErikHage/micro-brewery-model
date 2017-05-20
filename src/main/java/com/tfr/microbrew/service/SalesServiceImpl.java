@@ -1,7 +1,9 @@
 package com.tfr.microbrew.service;
 
+import com.tfr.microbrew.config.BeverageVolume;
 import com.tfr.microbrew.dao.SalesDao;
 import com.tfr.microbrew.model.BeverageProduct;
+import com.tfr.microbrew.model.Recipe;
 import com.tfr.microbrew.model.Sale;
 import com.tfr.microbrew.probability.NormalizedProbability;
 import org.joda.time.LocalDate;
@@ -26,24 +28,29 @@ public class SalesServiceImpl implements SalesService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private NormalizedProbability<BeverageProduct> volumeProbability;
-    private NormalizedProbability<String> productProbability;
+    private NormalizedProbability<Recipe> productProbability;
+
+    private Map<BeverageVolume, Double> volumeFactors;
 
     private final SalesDao salesDao;
 
     @Autowired
     public SalesServiceImpl(SalesDao salesDao,
-                            @Qualifier("ProductProbabilities") NormalizedProbability<String> productProbability,
-                            @Qualifier("VolumeProbabilities") NormalizedProbability<BeverageProduct> volumeProbability) {
+                            @Qualifier("ProductProbabilities") NormalizedProbability<Recipe> productProbability,
+                            @Qualifier("VolumeProbabilities") NormalizedProbability<BeverageProduct> volumeProbability,
+                            @Qualifier("VolumeFactors") Map<BeverageVolume, Double> volumeFactors) {
         this.salesDao = salesDao;
         this.volumeProbability = volumeProbability;
         this.productProbability = productProbability;
+        this.volumeFactors = volumeFactors;
     }
 
     @Override
     public Sale generateSale() {
         BeverageProduct beverageProduct = volumeProbability.getRandom();
-        String beerName = productProbability.getRandom();
-        return new Sale(beverageProduct, beerName);
+        Recipe recipe = productProbability.getRandom();
+        double price = recipe.getPintPrice() * volumeFactors.get(beverageProduct.getBeverageVolume());
+        return new Sale(beverageProduct, recipe.getName(), price);
     }
 
     @Override
