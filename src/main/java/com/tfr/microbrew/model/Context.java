@@ -21,16 +21,19 @@ public class Context {
     private List<InventoryItem> inventory;
     private List<Batch> batches;
     private List<Sale> sales;
+    private List<Cashflow> cashflows;
 
     public Context() {
         //for Jackson parsing
     }
 
-    public Context(LocalDate date, List<InventoryItem> inventory, List<Batch> batches, List<Sale> sales) {
+    public Context(LocalDate date, List<InventoryItem> inventory, List<Batch> batches,
+                   List<Sale> sales, List<Cashflow> cashflows) {
         this.date = date;
         this.inventory = inventory;
         this.batches = batches;
         this.sales = sales;
+        this.cashflows = cashflows;
     }
 
     public LocalDate getDate() {
@@ -63,5 +66,13 @@ public class Context {
 
     public void setSales(List<Sale> sales) {
         this.sales = sales;
+    }
+
+    public List<Cashflow> getCashflows() {
+        return cashflows;
+    }
+
+    public void setCashflows(List<Cashflow> cashflows) {
+        this.cashflows = cashflows;
     }
 }

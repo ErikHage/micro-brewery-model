@@ -1,5 +1,6 @@
 package com.tfr.microbrew.model;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,9 @@ public class ViewContext {
     private final int totalFulfilledSales;
     private final int totalUnfulfilledSales;
 
-
+    private final BigDecimal positiveCashflow;
+    private final BigDecimal negativeCashflow;
+    private final BigDecimal profit;
 
     public ViewContext(Context context) {
         this.context = context;
@@ -58,6 +61,20 @@ public class ViewContext {
                 .filter(s -> !s.isFulfilled())
                 .collect(Collectors.toList())
                 .size();
+
+        double positiveCashflowTemp = context.getCashflows().stream()
+                .filter(c -> c.getAmount() > 0)
+                .mapToDouble(Cashflow::getAmount)
+                .sum();
+        this.positiveCashflow = new BigDecimal(positiveCashflowTemp).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+        double negativeCashflowTemp = context.getCashflows().stream()
+                .filter(c -> c.getAmount() <= 0)
+                .mapToDouble(Cashflow::getAmount)
+                .sum();
+        this.negativeCashflow = new BigDecimal(negativeCashflowTemp).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+        this.profit = positiveCashflow.add(negativeCashflow).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
     public Context getContext() {
@@ -98,5 +115,17 @@ public class ViewContext {
 
     public Map<String, Long> getBatchesByStep() {
         return batchesByStep;
+    }
+
+    public double getPositiveCashflow() {
+        return positiveCashflow.doubleValue();
+    }
+
+    public double getNegativeCashflow() {
+        return negativeCashflow.doubleValue();
+    }
+
+    public double getProfit() {
+        return profit.doubleValue();
     }
 }

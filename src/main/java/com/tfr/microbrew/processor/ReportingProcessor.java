@@ -5,11 +5,9 @@ import com.google.common.collect.Sets;
 import com.tfr.microbrew.config.BrewStep;
 import com.tfr.microbrew.config.DayOfWeek;
 import com.tfr.microbrew.controller.ModelController;
-import com.tfr.microbrew.model.Batch;
-import com.tfr.microbrew.model.Context;
-import com.tfr.microbrew.model.InventoryItem;
-import com.tfr.microbrew.model.Sale;
+import com.tfr.microbrew.model.*;
 import com.tfr.microbrew.service.BatchService;
+import com.tfr.microbrew.service.CashflowService;
 import com.tfr.microbrew.service.InventoryService;
 import com.tfr.microbrew.service.SalesService;
 import org.joda.time.LocalDate;
@@ -40,17 +38,20 @@ public class ReportingProcessor implements Processor {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private BatchService batchService;
-    private SalesService salesService;
-    private InventoryService inventoryService;
+    private final BatchService batchService;
+    private final SalesService salesService;
+    private final InventoryService inventoryService;
+    private final CashflowService cashflowService;
 
     @Autowired
     public ReportingProcessor(BatchService batchService,
                               SalesService salesService,
-                              InventoryService inventoryService) {
+                              InventoryService inventoryService,
+                              CashflowService cashflowService) {
         this.batchService = batchService;
         this.salesService = salesService;
         this.inventoryService = inventoryService;
+        this.cashflowService = cashflowService;
     }
 
     @Override
@@ -94,10 +95,11 @@ public class ReportingProcessor implements Processor {
         List<InventoryItem> inventoryItems = new ArrayList<>(inventoryService.getInventory());
         List<Batch> batches = new ArrayList<>(batchService.getAllInProgress());
         List<Sale> sales = salesService.getSalesByDate(date);
+        List<Cashflow> cashflows = cashflowService.getByDate(date);
 
         logger.debug("SaveContext: Sales returned: " + sales.size());
 
-        Context context = new Context(date, inventoryItems, batches, sales);
+        Context context = new Context(date, inventoryItems, batches, sales, cashflows);
 
         checkContextDirectory();
 
