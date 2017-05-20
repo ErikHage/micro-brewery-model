@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.tfr.microbrew.config.Constants;
 import com.tfr.microbrew.config.DayOfWeek;
+import com.tfr.microbrew.model.Cashflow;
 import com.tfr.microbrew.model.InventoryItem;
 import com.tfr.microbrew.model.Recipe;
 import com.tfr.microbrew.service.BatchService;
+import com.tfr.microbrew.service.CashflowService;
 import com.tfr.microbrew.service.InventoryService;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -32,19 +34,22 @@ public class InventoryProcessor implements Processor {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private BatchService batchService;
-    private InventoryService inventoryService;
+    private final BatchService batchService;
+    private final InventoryService inventoryService;
+    private final CashflowService cashflowService;
 
-    private static final List<InventoryItem> itemsToReorder = Lists.newArrayList();
+    private static final Set<InventoryItem> itemsToReorder = Sets.newHashSet();
 
     private final List<Recipe> recipes;
 
     @Autowired
     public InventoryProcessor(BatchService batchService,
                               InventoryService inventoryService,
+                              CashflowService cashflowService,
                               @Qualifier("RecipesList") List<Recipe> recipes) {
         this.batchService = batchService;
         this.inventoryService = inventoryService;
+        this.cashflowService = cashflowService;
         this.recipes = recipes;
     }
 
@@ -59,7 +64,7 @@ public class InventoryProcessor implements Processor {
         checkInventoryLevels();
 
         if(RESTOCK_INVENTORY_DAYS.contains(DayOfWeek.getFromInt(date.getDayOfWeek()))) {
-            restock();
+            restock(date);
         } else {
             logger.debug("Not a reorder day");
         }
@@ -83,7 +88,7 @@ public class InventoryProcessor implements Processor {
 
         logger.debug(String.format("Adding these %s batches to the queue: %s", toBrew.size(), toBrew));
 
-        toBrew.forEach(productName -> batchService.addBatch(productName));
+        toBrew.forEach(batchService::addBatch);
     }
 
     private void checkInventoryLevels() {
@@ -94,9 +99,14 @@ public class InventoryProcessor implements Processor {
                 .collect(Collectors.toList()));
     }
 
-    private void restock() {
-        logger.debug(String.format("Found %s items to be reordered", itemsToReorder.size()));
-        itemsToReorder.forEach(i -> i.setQuantity(i.getQuantity() + i.getReorderQuantity()));
+    private void restock(LocalDate date) {
+        logger.debug(String.format("%s items to be reordered", itemsToReorder.size()));
+        itemsToReorder.forEach(i -> {
+            double cost = i.getReorderQuantity() * i.getUnitPrice();
+            i.setQuantity(i.getQuantity() + i.getReorderQuantity());
+            cashflowService.saveCashflow(new Cashflow(date, (-1)*cost));
+        });
+        itemsToReorder.clear();
     }
 
     @Override

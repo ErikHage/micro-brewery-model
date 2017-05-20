@@ -77,12 +77,10 @@ public class ReportingProcessor implements Processor {
         sb.append("Sales Report\n");
         sb.append(String.format("\tCompleted Sales  : %s\n", salesService.getSales(true)));
         sb.append(String.format("\tUnfulfilled Sales: %s\n", salesService.getSales(false)));
-//        sb.append("\tBy Volume\n");
-//        salesByVolume.entrySet().forEach(e ->
-//                sb.append(String.format("\t\t%-10s: %s \n", e.getKey(), e.getValue())));
-//        sb.append("\tBy Product\n");
-//        salesByProduct.entrySet().forEach(e ->
-//                sb.append(String.format("\t\t%-30s: %s \n", e.getKey(), e.getValue())));
+
+//        sb.append("Cashflow Report\n");
+//        cashflowService.getByDate(date).forEach(c ->
+//                sb.append("\t" + c.getAmount() + "\n"));
 
         sb.append("\tTotal Missed Sales by Product\n");
         salesService.getUnfulfilledSalesByProduct().entrySet().forEach(e ->

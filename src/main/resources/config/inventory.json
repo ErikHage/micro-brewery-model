@@ -3,44 +3,24 @@
     "name": "Checks and Balances IPA",
     "category": "Beer",
     "reorderThreshold": 160,
-    "reorderQuantity": 0
-  },
-  {
-    "name": "Rosie's Red Ale",
-    "category": "Beer",
-    "reorderThreshold": 40,
-    "reorderQuantity": 0
-  },
-  {
-    "name": "Cold Brew Coffee Porter",
-    "category": "Beer",
-    "reorderThreshold": 40,
-    "reorderQuantity": 0
-  },
-  {
-    "name": "Tripplecanoe and Tyler Too",
-    "category": "Beer",
-    "reorderThreshold": 30,
-    "reorderQuantity": 0
-  },
-  {
-    "name": "Wit of Their Eyes",
-    "category": "Beer",
-    "reorderThreshold": 30,
-    "reorderQuantity": 0
+    "reorderQuantity": 0,
+    "unitPrice" : 0.0
   },
   {
     "name": "Amber Waves of Grain",
     "category": "Beer",
-    "reorderThreshold": 30,
-    "reorderQuantity": 0
+    "reorderThreshold": 100,
+    "reorderQuantity": 0,
+    "unitPrice" : 0.0
   },
   {
-    "name": "Summer SMaSH IPA",
+    "name": "Kolsche",
     "category": "Beer",
-    "reorderThreshold": 30,
-    "reorderQuantity": 0
+    "reorderThreshold": 100,
+    "reorderQuantity": 0,
+    "unitPrice" : 0.0
   },
+
 
 
 
@@ -51,98 +31,127 @@
   {
     "name": "American 2-Row Pale Malt",
     "category": "Grain",
-    "reorderThreshold": 500,
-    "reorderQuantity": 1200
-  },
-  {
-    "name": "Belgian 2-Row Pale Malt",
-    "category": "Grain",
-    "reorderThreshold": 500,
-    "reorderQuantity": 1200
+    "reorderThreshold": 750,
+    "reorderQuantity": 2000,
+    "unitPrice" : 0.61
   },
   {
     "name": "Pilsner 2-Row Pale Malt",
     "category": "Grain",
-    "reorderThreshold": 500,
-    "reorderQuantity": 1200
+    "reorderThreshold": 750,
+    "reorderQuantity": 2000,
+    "unitPrice" : 0.61
   },
   {
     "name": "Caramel 20L Malt",
     "category": "Grain",
-    "reorderThreshold": 150,
-    "reorderQuantity": 500
+    "reorderThreshold": 100,
+    "reorderQuantity": 500,
+    "unitPrice" : 0.61
   },
   {
     "name": "Caramel 40L Malt",
     "category": "Grain",
-    "reorderThreshold": 150,
-    "reorderQuantity": 500
+    "reorderThreshold": 100,
+    "reorderQuantity": 500,
+    "unitPrice" : 0.61
   },
   {
-    "name": "Caramel 60L Malt",
-    "category": "Grain",
-    "reorderThreshold": 150,
-    "reorderQuantity": 500
-  },
-  {
-    "name": "Biscuit Malt",
+    "name": "Caramel 120L Malt",
     "category": "Grain",
     "reorderThreshold": 100,
-    "reorderQuantity": 250
+    "reorderQuantity": 500,
+    "unitPrice" : 0.61
+  },
+  {
+    "name": "Cara-Pils Malt",
+    "category": "Grain",
+    "reorderThreshold": 100,
+    "reorderQuantity": 250,
+    "unitPrice" : 0.61
+  },
+  {
+    "name": "Munich Malt",
+    "category": "Grain",
+    "reorderThreshold": 100,
+    "reorderQuantity": 250,
+    "unitPrice" : 0.61
+  },
+  {
+    "name": "Chocolate Malt",
+    "category": "Grain",
+    "reorderThreshold": 50,
+    "reorderQuantity": 100,
+    "unitPrice" : 0.61
+  },
+  {
+    "name": "Rye Malt",
+    "category": "Grain",
+    "reorderThreshold": 50,
+    "reorderQuantity": 100,
+    "unitPrice" : 0.61
   },
 
 
 
 
-
-
-
   {
-    "name": "Styrian Golding",
+    "name": "Willamette",
     "category": "Hop",
-    "reorderThreshold": 50,
-    "reorderQuantity": 100
-  },
-  {
-    "name": "Kent Golding",
-    "category": "Hop",
-    "reorderThreshold": 50,
-    "reorderQuantity": 100
+    "reorderThreshold": 10,
+    "reorderQuantity": 30,
+    "unitPrice" : 12.75
   },
   {
     "name": "Cascade",
     "category": "Hop",
-    "reorderThreshold": 50,
-    "reorderQuantity": 150
+    "reorderThreshold": 15,
+    "reorderQuantity": 30,
+    "unitPrice" : 12.75
   },
   {
-    "name": "Citra",
+    "name": "Amarillo",
+    "category": "Hop",
+    "reorderThreshold": 15,
+    "reorderQuantity": 30,
+    "unitPrice" : 12.75
+  },
+  {
+    "name": "Centennial",
     "category": "Hop",
     "reorderThreshold": 20,
-    "reorderQuantity": 50
+    "reorderQuantity": 30,
+    "unitPrice" : 12.75
   },
-
-
-
+  {
+    "name": "Hallertauer",
+    "category": "Hop",
+    "reorderThreshold": 20,
+    "reorderQuantity": 30,
+    "unitPrice" : 12.75
+  },
+  {
+    "name": "Hallertauer Mittelfrueh",
+    "category": "Hop",
+    "reorderThreshold": 20,
+    "reorderQuantity": 30,
+    "unitPrice" : 12.75
+  },
+  {
+    "name": "Saaz",
+    "category": "Hop",
+    "reorderThreshold": 20,
+    "reorderQuantity": 30,
+    "unitPrice" : 12.75
+  },
 
 
   {
     "name": "Irish Moss",
     "category": "Adjunct",
     "reorderThreshold": 5,
-    "reorderQuantity": 30
-  },
-  {
-    "name": "Light Belgian Candi Sugar",
-    "category": "Adjunct",
-    "reorderThreshold": 50,
-    "reorderQuantity": 100
-  },
-  {
-    "name": "Dark Belgian Candi Sugar",
-    "category": "Adjunct",
-    "reorderThreshold": 50,
-    "reorderQuantity": 100
+    "reorderQuantity": 44,
+    "unitPrice" : 8.60
   },
 
 
@@ -152,27 +161,17 @@
 
 
   {
-    "name": "White Labs Saison",
+    "name": "Safale American Ale US-05",
     "category": "Yeast",
     "reorderThreshold": 10,
-    "reorderQuantity": 30
+    "reorderQuantity": 30,
+    "unitPrice" : 0.0
   },
   {
-    "name": "White Labs Witbier",
+    "name": "Safale German Ale K-97",
     "category": "Yeast",
     "reorderThreshold": 10,
-    "reorderQuantity": 30
-  },
-  {
-    "name": "Safale American Ale",
-    "category": "Yeast",
-    "reorderThreshold": 10,
-    "reorderQuantity": 30
-  },
-  {
-    "name": "Safale English Ale",
-    "category": "Yeast",
-    "reorderThreshold": 10,
-    "reorderQuantity": 30
+    "reorderQuantity": 30,
+    "unitPrice" : 0.0
   }
 ]

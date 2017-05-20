@@ -52,7 +52,6 @@ public class BrewingProcessor implements Processor {
                     brewBatch(batchToBrew);
                 } else {
                     logger.debug(String.format("Cannot brew %s due to insufficient inventory", batchToBrew.getRecipe().getName()));
-                    //TODO what to do when not in stock? reorder/add to reorder list? (should be taken care of in inventory check and reorder)
                 }
             } else {
                 logger.debug("No Space in fermenters to brew a new batch today");

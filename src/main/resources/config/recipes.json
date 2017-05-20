@@ -10,154 +10,38 @@
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",
-        "quantity": 250.0
+        "quantity": 242.0
       },
       {
         "name": "Caramel 20L Malt",
-        "quantity": 50.0
+        "quantity": 22.0
+      },
+      {
+        "name": "Cara-Pils Malt",
+        "quantity": 16.5
+      },
+      {
+        "name": "Munich Malt",
+        "quantity": 16.5
       },
       {
         "name": "Cascade",
-        "quantity": 10.0
+        "quantity": 5.15625
       },
       {
-        "name": "Styrian Golding",
-        "quantity": 5.0
+        "name": "Willamette",
+        "quantity": 1.375
       },
       {
-        "name": "Irish Moss",
-        "quantity": 1.0
-      },
-      {
-        "name": "Safale American Ale",
-        "quantity": 5.0
-      }
-    ]
-  },
-  {
-    "name": "Rosie's Red Ale",
-    "volume": 93,
-    "fermentationDays": 7,
-    "carbonationDays": 2,
-    "active": true,
-    "saleProbability": 15.0,
-    "pintPrice" : 6.0,
-    "ingredients": [
-      {
-        "name": "American 2-Row Pale Malt",
-        "quantity": 250.0
-      },
-      {
-        "name": "Caramel 60L Malt",
-        "quantity": 50.0
-      },
-      {
-        "name": "Kent Golding",
-        "quantity": 10.0
+        "name": "Amarillo",
+        "quantity": 2.5
       },
       {
         "name": "Irish Moss",
         "quantity": 1.0
       },
       {
-        "name": "Safale American Ale",
-        "quantity": 5.0
-      }
-    ]
-  },
-  {
-    "name": "Cold Brew Coffee Porter",
-    "volume": 93,
-    "fermentationDays": 10,
-    "carbonationDays": 1,
-    "active": true,
-    "saleProbability": 15.0,
-    "pintPrice" : 6.0,
-    "ingredients": [
-      {
-        "name": "American 2-Row Pale Malt",
-        "quantity": 250.0
-      },
-      {
-        "name": "Caramel 60L Malt",
-        "quantity": 50.0
-      },
-      {
-        "name": "Kent Golding",
-        "quantity": 5.0
-      },
-      {
-        "name": "Irish Moss",
-        "quantity": 1.0
-      },
-      {
-        "name": "Safale American Ale",
-        "quantity": 5.0
-      }
-    ]
-  },
-  {
-    "name": "Tripplecanoe and Tyler Too",
-    "volume": 93,
-    "fermentationDays": 12,
-    "carbonationDays": 2,
-    "active": true,
-    "saleProbability": 10.0,
-    "pintPrice" : 7.0,
-    "ingredients": [
-      {
-        "name": "Belgian 2-Row Pale Malt",
-        "quantity": 250.0
-      },
-      {
-        "name": "Caramel 40L Malt",
-        "quantity": 50.0
-      },
-      {
-        "name": "Biscuit Malt",
-        "quantity": 50.0
-      },
-      {
-        "name": "Citra",
-        "quantity": 10.0
-      },
-      {
-        "name": "Irish Moss",
-        "quantity": 1.0
-      },
-      {
-        "name": "Safale English Ale",
-        "quantity": 5.0
-      }
-    ]
-  },
-  {
-    "name": "Wit of Their Eyes",
-    "volume": 93,
-    "fermentationDays": 5,
-    "carbonationDays": 2,
-    "active": true,
-    "saleProbability": 10.0,
-    "pintPrice" : 6.0,
-    "ingredients": [
-      {
-        "name": "Pilsner 2-Row Pale Malt",
-        "quantity": 250.0
-      },
-      {
-        "name": "Caramel 20L Malt",
-        "quantity": 50.0
-      },
-      {
-        "name": "Cascade",
-        "quantity": 10.0
-      },
-      {
-        "name": "Irish Moss",
-        "quantity": 1.0
-      },
-      {
-        "name": "White Labs Witbier",
+        "name": "Safale American Ale US-05",
         "quantity": 5.0
       }
     ]
@@ -168,50 +52,78 @@
     "fermentationDays": 7,
     "carbonationDays": 2,
     "active": true,
-    "saleProbability": 10.0,
+    "saleProbability": 20.0,
     "pintPrice" : 6.0,
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",
-        "quantity": 250.0
+        "quantity": 242.0
       },
       {
-        "name": "Caramel 20L Malt",
-        "quantity": 50.0
+        "name": "Caramel 40L Malt",
+        "quantity": 22.0
+      },
+      {
+        "name": "Caramel 120L Malt",
+        "quantity": 8.0
+      },
+      {
+        "name": "Munich Malt",
+        "quantity": 16.5
+      },
+      {
+        "name": "Chocolate Malt",
+        "quantity": 5.0
+      },
+      {
+        "name": "Centennial",
+        "quantity": 5.2
       },
       {
         "name": "Cascade",
-        "quantity": 10.0
+        "quantity": 8.5
       },
       {
         "name": "Irish Moss",
         "quantity": 1.0
       },
       {
-        "name": "Safale American Ale",
+        "name": "Safale American Ale US-05",
         "quantity": 5.0
       }
     ]
   },
   {
-    "name": "Summer SMaSH IPA",
+    "name": "Kolsche",
     "volume": 93,
-    "fermentationDays": 7,
-    "carbonationDays": 2,
+    "fermentationDays": 10,
+    "carbonationDays": 1,
     "active": true,
-    "saleProbability": 10.0,
+    "saleProbability": 20.0,
     "pintPrice" : 6.0,
     "ingredients": [
       {
-        "name": "American 2-Row Pale Malt",
-        "quantity": 250.0
+        "name": "Pilsner 2-Row Pale Malt",
+        "quantity": 224.0
       },
       {
-        "name": "Caramel 20L Malt",
-        "quantity": 50.0
+        "name": "Cara-Pils Malt",
+        "quantity": 16.5
       },
       {
-        "name": "Citra",
+        "name": "Rye Malt",
+        "quantity": 12.5
+      },
+      {
+        "name": "Hallertauer",
+        "quantity": 5.0
+      },
+      {
+        "name": "Hallertauer Mittelfrueh",
+        "quantity": 5.0
+      },
+      {
+        "name": "Saaz",
         "quantity": 10.0
       },
       {
@@ -219,9 +131,11 @@
         "quantity": 1.0
       },
       {
-        "name": "Safale American Ale",
+        "name": "Safale German Ale K-97",
         "quantity": 5.0
       }
     ]
   }
 ]
+
+

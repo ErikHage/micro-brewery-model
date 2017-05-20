@@ -97,6 +97,6 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public void deleteItem(String name) {
         logger.debug(String.format("Deleting item: %s", name));
-        inventoryDao.delete(new InventoryItem(name, "", 0.0, 0.0));
+        inventoryDao.delete(new InventoryItem(name, "", 0.0, 0.0, 0.0));
     }
 }
