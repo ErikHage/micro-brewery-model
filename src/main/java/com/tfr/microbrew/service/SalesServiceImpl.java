@@ -1,7 +1,5 @@
 package com.tfr.microbrew.service;
 
-import com.tfr.microbrew.config.Constants;
-import com.tfr.microbrew.config.SalesConfig;
 import com.tfr.microbrew.dao.SalesDao;
 import com.tfr.microbrew.model.BeverageProduct;
 import com.tfr.microbrew.model.Sale;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -31,28 +28,15 @@ public class SalesServiceImpl implements SalesService {
     private NormalizedProbability<BeverageProduct> volumeProbability;
     private NormalizedProbability<String> productProbability;
 
-    private SalesDao salesDao;
+    private final SalesDao salesDao;
 
     @Autowired
     public SalesServiceImpl(SalesDao salesDao,
-                            @Qualifier("ProductProbabilities") Map<String, Double> productProbabilityConfig,
-                            @Qualifier("VolumeProbabilities") List<BeverageProduct> volumeProbabilityConfig) {
+                            @Qualifier("ProductProbabilities") NormalizedProbability<String> productProbability,
+                            @Qualifier("VolumeProbabilities") NormalizedProbability<BeverageProduct> volumeProbability) {
         this.salesDao = salesDao;
-        this.volumeProbability = new NormalizedProbability<>();
-        this.productProbability = new NormalizedProbability<>();
-        init(productProbabilityConfig, volumeProbabilityConfig);
-    }
-
-    private void init(Map<String, Double> productProbabilityConfig,
-                      List<BeverageProduct> volumeProbabilityConfig) {
-        volumeProbabilityConfig.forEach(b -> {
-            volumeProbability.add(b.getProbability(), b);
-            logger.debug(String.format("Probability of sale of volume: %-7s=%s",
-                    b.getBeverageVolume().getValue(), b.getProbability()));
-        });
-        productProbabilityConfig.entrySet().stream()
-                .filter(e -> Constants.ACTIVE_PRODUCTS.contains(e.getKey()))
-                .forEach(e -> productProbability.add(e.getValue(), e.getKey()));
+        this.volumeProbability = volumeProbability;
+        this.productProbability = productProbability;
     }
 
     @Override

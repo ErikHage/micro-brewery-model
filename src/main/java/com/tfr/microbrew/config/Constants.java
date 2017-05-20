@@ -11,27 +11,6 @@ import java.util.Set;
  */
 public interface Constants {
 
-    interface RecipeNames {
-        String CHECKS_AND_BALANCES_IPA = "Checks and Balances IPA";
-        String ROSIES_RED_ALE = "Rosie's Red Ale";
-        String COLD_BREW_COFFEE_PORTER = "Cold Brew Coffee Porter";
-        String TRIPPLECANOE_AND_TYLER_TOO = "Tripplecanoe and Tyler Too";
-        String WIT_OF_THEIR_EYES = "Wit of Their Eyes";
-        String AMBER_WAVES_OF_GRAIN = "Amber Waves of Grain";
-        String SUMMER_SMASH_IPA = "Summer SMaSH IPA";
-    }
-
-    Set<String> ACTIVE_PRODUCTS = Sets.newHashSet(
-            RecipeNames.CHECKS_AND_BALANCES_IPA,
-            RecipeNames.ROSIES_RED_ALE,
-            RecipeNames.COLD_BREW_COFFEE_PORTER,
-            RecipeNames.TRIPPLECANOE_AND_TYLER_TOO,
-            RecipeNames.WIT_OF_THEIR_EYES,
-            RecipeNames.AMBER_WAVES_OF_GRAIN,
-            RecipeNames.SUMMER_SMASH_IPA
-
-    );
-
     interface BrewHouse {
         double BATCH_SIZE = 93.0;
         int FERMENTING_VESSELS = 8;
@@ -65,6 +44,10 @@ public interface Constants {
             DayOfWeek.FRIDAY,
             DayOfWeek.SATURDAY,
             DayOfWeek.SUNDAY
+    );
+
+    Set<DayOfWeek> RESTOCK_INVENTORY_DAYS = Sets.newHashSet(
+            DayOfWeek.MONDAY
     );
 
 }

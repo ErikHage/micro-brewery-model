@@ -1,11 +1,10 @@
 package com.tfr.microbrew.processor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Sets;
 import com.tfr.microbrew.config.BrewStep;
-import com.tfr.microbrew.config.ContextId;
 import com.tfr.microbrew.config.DayOfWeek;
+import com.tfr.microbrew.controller.ModelController;
 import com.tfr.microbrew.model.Batch;
 import com.tfr.microbrew.model.Context;
 import com.tfr.microbrew.model.InventoryItem;
@@ -25,9 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -46,17 +43,14 @@ public class ReportingProcessor implements Processor {
     private BatchService batchService;
     private SalesService salesService;
     private InventoryService inventoryService;
-    private ContextId contextId;
 
     @Autowired
     public ReportingProcessor(BatchService batchService,
                               SalesService salesService,
-                              InventoryService inventoryService,
-                              ContextId contextId) {
+                              InventoryService inventoryService) {
         this.batchService = batchService;
         this.salesService = salesService;
         this.inventoryService = inventoryService;
-        this.contextId = contextId;
     }
 
     @Override
@@ -117,21 +111,21 @@ public class ReportingProcessor implements Processor {
 
     private void writeFile(LocalDate date, String json) throws IOException {
         String filename = date.toString() + ".json";
-        File file = new File(CONTEXT_DIRECTORY + "/" + contextId.getContextId() + "/" + filename);
+        File file = new File(CONTEXT_DIRECTORY + "/" + ModelController.contextId + "/" + filename);
 
         try(FileWriter fw = new FileWriter(file.getAbsoluteFile())) {
             try(BufferedWriter bw = new BufferedWriter(fw)) {
                 bw.write(json);
-                logger.debug("Wrote file: " + CONTEXT_DIRECTORY + "/" + contextId.getContextId() + "/" + filename);
+                logger.debug("Wrote file: " + CONTEXT_DIRECTORY + "/" + ModelController.contextId + "/" + filename);
             }
         }
     }
 
     private void checkContextDirectory() {
-        File directory = new File(CONTEXT_DIRECTORY + "/" + contextId.getContextId());
+        File directory = new File(CONTEXT_DIRECTORY + "/" + ModelController.contextId);
         if(!directory.exists()) {
-            if(!directory.mkdir()) {
-                logger.error("Failed to mkdir for " + CONTEXT_DIRECTORY + "/" + contextId.getContextId());
+            if(!directory.mkdirs()) {
+                logger.error("Failed to mkdirs for " + CONTEXT_DIRECTORY + "/" + ModelController.contextId);
             }
         }
     }

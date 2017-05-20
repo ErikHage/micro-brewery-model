@@ -17,17 +17,12 @@ public class Recipe {
     private long fermentationDays;
     private long carbonationDays;
 
+    private boolean isActive;
+
+    private double saleProbability;
+
     public Recipe() {
         //for Jackson parsing
-    }
-
-    public Recipe(String name, double volume, List<Ingredient> ingredients,
-                  long fermentationDays, long carbonationDays) {
-        this.name = name;
-        this.volume = volume;
-        this.ingredients = ingredients;
-        this.fermentationDays = fermentationDays;
-        this.carbonationDays = carbonationDays;
     }
 
     @Override
@@ -53,6 +48,8 @@ public class Recipe {
                 ", ingredients=" + ingredients +
                 ", fermentationDays=" + fermentationDays +
                 ", carbonationDays=" + carbonationDays +
+                ", isActive=" + isActive +
+                ", saleProbability=" + saleProbability +
                 '}';
     }
 
@@ -94,5 +91,21 @@ public class Recipe {
 
     public void setCarbonationDays(long carbonationDays) {
         this.carbonationDays = carbonationDays;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public double getSaleProbability() {
+        return saleProbability;
+    }
+
+    public void setSaleProbability(double saleProbability) {
+        this.saleProbability = saleProbability;
     }
 }

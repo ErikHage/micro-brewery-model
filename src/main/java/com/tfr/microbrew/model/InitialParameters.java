@@ -17,6 +17,8 @@ public class InitialParameters {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    private String contextId;
+
     public InitialParameters() {
 
     }
@@ -43,5 +45,13 @@ public class InitialParameters {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public String getContextId() {
+        return contextId;
+    }
+
+    public void setContextId(String contextId) {
+        this.contextId = contextId;
     }
 }

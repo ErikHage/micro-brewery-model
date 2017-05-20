@@ -4,6 +4,8 @@
     "volume": 93,
     "fermentationDays": 7,
     "carbonationDays": 2,
+    "active": true,
+    "saleProbability": 30.0,
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",
@@ -36,6 +38,8 @@
     "volume": 93,
     "fermentationDays": 7,
     "carbonationDays": 2,
+    "active": true,
+    "saleProbability": 15.0,
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",
@@ -64,6 +68,8 @@
     "volume": 93,
     "fermentationDays": 10,
     "carbonationDays": 1,
+    "active": true,
+    "saleProbability": 15.0,
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",
@@ -92,6 +98,8 @@
     "volume": 93,
     "fermentationDays": 12,
     "carbonationDays": 2,
+    "active": true,
+    "saleProbability": 10.0,
     "ingredients": [
       {
         "name": "Belgian 2-Row Pale Malt",
@@ -124,6 +132,8 @@
     "volume": 93,
     "fermentationDays": 5,
     "carbonationDays": 2,
+    "active": true,
+    "saleProbability": 10.0,
     "ingredients": [
       {
         "name": "Pilsner 2-Row Pale Malt",
@@ -152,6 +162,8 @@
     "volume": 93,
     "fermentationDays": 7,
     "carbonationDays": 2,
+    "active": true,
+    "saleProbability": 10.0,
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",
@@ -180,6 +192,8 @@
     "volume": 93,
     "fermentationDays": 7,
     "carbonationDays": 2,
+    "active": true,
+    "saleProbability": 10.0,
     "ingredients": [
       {
         "name": "American 2-Row Pale Malt",

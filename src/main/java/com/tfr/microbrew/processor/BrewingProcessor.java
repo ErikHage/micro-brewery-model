@@ -44,11 +44,9 @@ public class BrewingProcessor implements Processor {
     public void process(LocalDate date) {
         logger.debug("Brewing Day");
 
-        Batch batchToBrew;
-
         if(batchService.getByStep(BrewStep.TO_BREW).size() > 0) {
             if (batchService.getByStep(BrewStep.FERMENT).size() < Constants.BrewHouse.FERMENTING_VESSELS) {
-                batchToBrew = getNextBatch();
+                Batch batchToBrew = getNextBatch();
                 if(verifyIngredientsInStock(batchToBrew)) {
                     removeIngredientsFromInventory(batchToBrew);
                     brewBatch(batchToBrew);

@@ -1,6 +1,5 @@
 package com.tfr.microbrew.processor;
 
-import com.tfr.microbrew.config.BeverageVolume;
 import com.tfr.microbrew.config.Constants;
 import com.tfr.microbrew.config.DayOfWeek;
 import com.tfr.microbrew.config.SalesConfig;
@@ -13,9 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
