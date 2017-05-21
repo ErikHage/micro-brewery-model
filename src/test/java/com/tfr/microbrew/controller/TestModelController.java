@@ -7,6 +7,7 @@ import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -26,23 +27,24 @@ public class TestModelController {
     private ModelController modelController;
 
     @Autowired
+    @Qualifier("InventoryItems")
     private Set<InventoryItem> inventoryItems;
 
+    /**
+     * Run Simulation with full starting inventory and double batches in stock
+     */
     @Test
-    public void test() {
+    public void test_FullInventory_DoubleBeerBatches() {
         InitialParameters initialParameters = new InitialParameters();
         initialParameters.setStartDate(new LocalDate(2017, 4, 1));
         initialParameters.setEndDate(new LocalDate(2017, 7, 1));
         initialParameters.setInitialInventory(new HashMap<>());
-        initialParameters.setContextId("test" + System.currentTimeMillis());
-
-        initialParameters.getInitialInventory()
-                .put("Checks and Balances IPA", Constants.BrewHouse.BATCH_SIZE * 2);
+        initialParameters.setContextId("test_FullInventory_DoubleBatches_" + System.currentTimeMillis());
 
         inventoryItems.stream()
                 .filter(i -> i.getCategory().equals(Constants.InventoryCategory.BEER))
                 .forEach(i -> initialParameters.getInitialInventory()
-                        .putIfAbsent(i.getName(), Constants.BrewHouse.BATCH_SIZE)
+                        .putIfAbsent(i.getName(), Constants.BrewHouse.BATCH_SIZE * 2)
                 );
 
         inventoryItems.stream()

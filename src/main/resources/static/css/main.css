@@ -1,7 +1,4 @@
-.left {
-    text-align: left;
-}
-
-.right {
-    text-align: right;
+/* BACKGROUND */
+body {
+    background: url('../image/background/seigaiha.png') repeat 0 0;
 }

@@ -33,13 +33,37 @@
         <div class="row">
             <div class="col-xs-12">
                 <ul class="nav nav-tabs" data-tabs="tabs">
-                    <li class="active"><a data-toggle="tab" href="#inventory">Inventory</a></li>
+                    <li class="active"><a data-toggle="tab" href="#overview">Overview</a></li>
                     <li class=""><a data-toggle="tab" href="#batches">Batches</a></li>
                     <li class=""><a data-toggle="tab" href="#sales">Sales</a></li>
-                    <li class=""><a data-toggle="tab" href="#cashflows">Cashflows</a></li>
+                    <li class=""><a data-toggle="tab" href="#inventory">Inventory</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div id="inventory" class="tab-pane active">
+                    <div id="overview" class="tab-pane active">
+                        <div class="row text-center">
+                            <div class="col-xs-2">
+                                <h4>Cashflows</h4>
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Incoming</th>
+                                        <td th:text="'$' + ${viewContext.positiveCashflow}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Outgoing</th>
+                                        <td th:text="'$' + ${viewContext.negativeCashflow}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Profit/Loss</th>
+                                        <td th:text="'$' + ${viewContext.profit}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-10"></div>
+                        </div>
+                    </div>
+                    <div id="inventory" class="tab-pane">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -189,32 +213,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                    </div>
-                    <div id="cashflows" class="tab-pane">
-                        <div class="row text-center">
-                            <div class="col-xs-4">
-                                <h4>Cashflows</h4>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Incoming Cashflow</th>
-                                            <th>Outgoing Cashflow</th>
-                                            <th></th>
-                                            <th>Profit/Loss</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td th:text="'$' + ${viewContext.positiveCashflow}"></td>
-                                            <td th:text="'$' + ${viewContext.negativeCashflow}"></td>
-                                            <td></td>
-                                            <td th:text="'$' + ${viewContext.profit}"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-xs-8"></div>
                         </div>
                     </div>
                 </div>

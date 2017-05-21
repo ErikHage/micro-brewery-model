@@ -31,7 +31,7 @@ public enum BeverageVolume {
 
     public static BeverageVolume getFromValue(String value) {
         for(BeverageVolume v : BeverageVolume.values()) {
-            if(v.value == value) {
+            if(v.value.equals(value)) {
                 return v;
             }
         }
