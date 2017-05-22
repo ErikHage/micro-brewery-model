@@ -2,3 +2,24 @@
 body {
     background: url('../image/background/seigaiha.png') repeat 0 0;
 }
+
+table {
+    width: 100%;
+}
+
+.rounded-bg {
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.gray-bg {
+    background: slategray;
+}
+
+.red-text {
+    color: darkred;
+}
+
+.blue-text {
+    color: blue;
+}

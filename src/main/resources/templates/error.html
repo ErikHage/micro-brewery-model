@@ -8,17 +8,22 @@
     <title>Error</title>
 </head>
 <body>
+    <div class="container-fluid">
 
-    <div class="text-center">
-        <h3>Error occurred</h3>
+        <div th:replace="fragments/nav :: nav-header"></div>
+
+        <div class="col-xs-12">
+            <div class="text-center">
+                <h3>Error occurred</h3>
+            </div>
+            <hr />
+            <div class="text-center rounded-background">
+                <p th:text="${message}"></p>
+                <a href="javascript:history.back()">Go Back</a>
+            </div>
+        </div>
+
     </div>
-    <hr />
-    <div class="text-center">
-        <p th:text="${message}"></p>
-        <a href="javascript:history.back()">Go Back</a>
-    </div>
-
-
 </body>
 <footer>
     <div th:replace="fragments/footer :: footer"></div>

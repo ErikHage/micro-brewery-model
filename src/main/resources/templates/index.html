@@ -8,16 +8,24 @@
     <title>Index</title>
 </head>
 <body>
+    <div class="container-fluid">
 
-    <div class="text-center">
-        <h3>Choose a context to explore</h3>
-    </div>
-    <hr />
-    <div class="text-center" th:each="contextId : ${contextIds}" >
-        <a th:text="${contextId}" th:href="'/microbrew/dayView/' + ${contextId}"></a>
-        <br />
-    </div>
+        <div th:replace="fragments/nav :: nav-header"></div>
 
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <h3>Choose a context to explore</h3>
+                </div>
+                <hr />
+                <div class="text-center rounded-background" th:each="contextId : ${contextIds}" >
+                    <a th:text="${contextId}" th:href="'/microbrew/dayView/' + ${contextId}"></a>
+                    <br />
+                </div>
+            </div>
+        </div>
+
+    </div>
 </body>
 <footer>
     <div th:replace="fragments/footer :: footer"></div>

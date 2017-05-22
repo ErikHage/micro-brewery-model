@@ -11,19 +11,19 @@
 </head>
 <body>
     <div class="container-fluid">
+
+        <div th:replace="fragments/nav :: nav-header"></div>
+
         <div class="row">
-            <div class="col-xs-12 text-center">
-                <a href="/index" th:href="@{${T(com.tfr.microbrew.config.Routes).INDEX}}">Index</a><br />
-            </div>
             <div class="col-xs-12">
                 <div class="page-header">
                     <h2 class="text-center" th:text="'Context: ' + ${contextId}"></h2>
                     <div class="row">
                         <div class="col-xs-12 text-center">
                             <h3>
-                                <a th:href="@{'/dayView/' + ${contextId} + '/' + ${previousDate}}"><i class="fa fa-backward" aria-hidden="true"></i></a>
+                                <a th:class="${hidePreviousArrow} ? hidden" th:href="@{'/dayView/' + ${contextId} + '/' + ${previousDate}}"><i class="fa fa-backward" aria-hidden="true"></i></a>
                                 <span th:text="'Date: ' + ${currentDate}"></span>
-                                <a th:href="@{'/dayView/' + ${contextId} + '/' + ${nextDate}}"><i class="fa fa-forward" aria-hidden="true"></i></a>
+                                <a th:class="${hideNextArrow} ? hidden" th:href="@{'/dayView/' + ${contextId} + '/' + ${nextDate}}"><i class="fa fa-forward" aria-hidden="true"></i></a>
                             </h3>
                         </div>
                     </div>
@@ -41,30 +41,67 @@
                 <div class="tab-content">
                     <div id="overview" class="tab-pane active">
                         <div class="row text-center">
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                                 <h4>Cashflows</h4>
-                                <table class="table">
+                                <table class="table table-responsive rounded-bg gray-bg">
                                     <tbody>
-                                    <tr>
+                                    <tr class="blue-text">
                                         <th>Incoming</th>
                                         <td th:text="'$' + ${viewContext.positiveCashflow}"></td>
                                     </tr>
-                                    <tr>
+                                    <tr class="red-text">
                                         <th>Outgoing</th>
                                         <td th:text="'$' + ${viewContext.negativeCashflow}"></td>
                                     </tr>
-                                    <tr>
-                                        <th>Profit/Loss</th>
+                                    <tr th:classappend="${viewContext.profit} &lt; 0 ? red-text : blue-text">
+                                        <th>Total</th>
                                         <td th:text="'$' + ${viewContext.profit}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-xs-10"></div>
+                            <div class="col-xs-3">
+                                <h4>Sales</h4>
+                                <table class="table table-responsive rounded-bg gray-bg">
+                                    <tbody>
+                                    <tr class="blue-text">
+                                        <th>Potential Sales</th>
+                                        <td th:text="${viewContext.totalSales}"></td>
+                                    </tr>
+                                    <tr class="blue-text">
+                                        <th>Fulfilled</th>
+                                        <td th:text="${viewContext.totalFulfilledSales}"></td>
+                                    </tr>
+                                    <tr class="red-text">
+                                        <th>Unfulfilled</th>
+                                        <td th:text="${viewContext.totalUnfulfilledSales}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-6">
+                                <h4>Batches</h4>
+                                <table class="table rounded-bg gray-bg">
+                                    <thead>
+                                    <tr>
+                                        <th>Recipe</th>
+                                        <th>Step</th>
+                                        <th>Days in Step</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="batch : ${viewContext.context.batches}">
+                                        <td th:text="${batch.recipe.name}"></td>
+                                        <td th:text="${batch.currentStep}"></td>
+                                        <td th:text="${batch.daysInStep}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div id="inventory" class="tab-pane">
-                        <table class="table">
+                        <table class="table rounded-bg gray-bg">
                             <thead>
                                 <tr>
                                     <th>Item</th>
@@ -85,7 +122,7 @@
                         <div class="row text-center">
                             <div class="col-xs-6">
                                 <h4>Batches in Progress</h4>
-                                <table class="table">
+                                <table class="table rounded-bg gray-bg">
                                     <thead>
                                         <tr>
                                             <th>Batch id</th>
@@ -106,7 +143,7 @@
                             </div>
                             <div class="col-xs-3">
                                 <h4>By Step</h4>
-                                <table class="table">
+                                <table class="table rounded-bg gray-bg">
                                     <thead>
                                         <tr>
                                             <th>Step</th>
@@ -127,7 +164,7 @@
                             </div>
                             <div class="col-xs-3">
                                 <h4>By Product</h4>
-                                <table class="table">
+                                <table class="table rounded-bg gray-bg">
                                     <thead>
                                     <tr>
                                         <th>Product</th>
@@ -152,7 +189,7 @@
                         <div class="row text-center">
                             <div class="col-xs-4">
                                 <h4>Sales by Product</h4>
-                                <table class="table">
+                                <table class="table rounded-bg gray-bg">
                                     <thead>
                                         <tr>
                                             <th>Product</th>
@@ -173,7 +210,7 @@
                             </div>
                             <div class="col-xs-4">
                                 <h4>Fulfilled Sales by Product</h4>
-                                <table class="table">
+                                <table class="table rounded-bg gray-bg">
                                     <thead>
                                         <tr>
                                             <th>Product</th>
@@ -194,7 +231,7 @@
                             </div>
                             <div class="col-xs-4">
                                 <h4>Unfulfilled Sales by Product</h4>
-                                <table class="table">
+                                <table class="table rounded-bg gray-bg">
                                     <thead>
                                         <tr>
                                             <th>Product</th>

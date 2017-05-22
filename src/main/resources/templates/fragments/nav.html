@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<th:block th:fragment="nav-header" th:remove="tag">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <a href="/index" th:href="@{${T(com.tfr.microbrew.config.Routes).INDEX}}">Index</a><br />
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>

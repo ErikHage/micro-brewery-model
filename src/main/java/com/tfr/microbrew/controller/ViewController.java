@@ -59,6 +59,8 @@ public class ViewController {
         LocalDate previousDate = date.minusDays(1);
         LocalDate nextDate = date.plusDays(1);
 
+        model.addAttribute("hidePreviousArrow", true);
+        model.addAttribute("hideNextArrow", false);
         model.addAttribute("contextId", contextId);
         model.addAttribute("currentDate", date.toString(dateFormatter));
         model.addAttribute("previousDate", previousDate.toString(dateFormatter));
@@ -87,6 +89,11 @@ public class ViewController {
         LocalDate nextDate = date.plusDays(1);
         ViewContext viewContext = new ViewContext(context);
 
+        boolean hidePreviousArrow = !isValidFile(contextId, previousDate);
+        boolean hideNextArrow = !isValidFile(contextId, nextDate);
+
+        model.addAttribute("hidePreviousArrow", hidePreviousArrow);
+        model.addAttribute("hideNextArrow", hideNextArrow);
         model.addAttribute("contextId", contextId);
         model.addAttribute("currentDate", dateString);
         model.addAttribute("previousDate", previousDate.toString(dateFormatter));
@@ -96,7 +103,14 @@ public class ViewController {
         return Views.DAY_VIEW_TEMPLATE;
     }
 
-
+    private boolean isValidFile(String context, LocalDate date) {
+        try {
+            ContextHelper.getContextData(context, date.toString(dateFormatter));
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+        return true;
+    }
 
 
 }
