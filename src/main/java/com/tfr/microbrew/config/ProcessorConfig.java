@@ -20,6 +20,7 @@ public class ProcessorConfig {
                                             TransferProcessor transferProcessor,
                                             BrewingProcessor brewingProcessor,
                                             SalesProcessor salesProcessor,
+                                            OverheadProcessor overheadProcessor,
                                             ReportingProcessor reportingProcessor) {
         Queue<Processor> processors = new LinkedList<>();
 
@@ -28,6 +29,7 @@ public class ProcessorConfig {
         processors.add(transferProcessor);
         processors.add(brewingProcessor);
         processors.add(salesProcessor);
+        processors.add(overheadProcessor);
         processors.add(reportingProcessor);
 
         return processors;

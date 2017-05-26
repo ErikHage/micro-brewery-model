@@ -79,9 +79,7 @@ public class ContextSummary {
                 .filter(Sale::isFulfilled)
                 .count();
 
-        long unfulSales = context.getSales().stream()
-                .filter(s -> !s.isFulfilled())
-                .count();
+        long unfulSales = context.getSales().size() - fulSales;
 
         fulfilledSales = fulfilledSales + fulSales;
         unfulfilledSales = unfulfilledSales + unfulSales;

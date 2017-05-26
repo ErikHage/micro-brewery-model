@@ -37,7 +37,7 @@ public class TestModelController {
     public void test_FullInventory_DoubleBeerBatches() {
         InitialParameters initialParameters = new InitialParameters();
         initialParameters.setStartDate(new LocalDate(2017, 4, 1));
-        initialParameters.setEndDate(new LocalDate(2017, 7, 1));
+        initialParameters.setEndDate(new LocalDate(2017, 10, 1));
         initialParameters.setInitialInventory(new HashMap<>());
         initialParameters.setContextId("test_FullInventory_DoubleBatches_" + System.currentTimeMillis());
 
