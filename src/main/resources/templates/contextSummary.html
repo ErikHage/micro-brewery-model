@@ -7,33 +7,82 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title th:text="'Overview for context ' + ${contextId}"></title>
+    <title th:text="'Summary for context ' + ${contextId}"></title>
 </head>
 <body class="container-fluid">
 
     <div th:replace="fragments/nav :: nav-header"></div>
 
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12 text-center">
+            <h3 th:text="'Summary for context ' + ${contextId}"></h3>
+            <p th:text="'Start Date: ' + ${contextSummary.startDate}"></p>
+            <p th:text="'  End Date: ' + ${contextSummary.endDate}"></p>
+            <p th:text="'Number of days in period: ' + ${contextSummary.numberOfDays}"></p>
+        </div>
+    </div>
 
+    <hr />
+
+    <div class="row">
+        <div class="col-xs-4 text-center">
             <h4>Cashflows</h4>
             <table class="table table-responsive rounded-bg gray-bg">
                 <tbody>
+                    <tr class="blue-text">
+                        <th>Incoming</th>
+                        <td th:text="'$' + ${contextSummary.cashIn}"></td>
+                    </tr>
+                    <tr class="red-text">
+                        <th>Outgoing</th>
+                        <td th:text="'$' + ${contextSummary.cashOut}"></td>
+                    </tr>
+                    <tr th:classappend="${contextSummary.totalCashflow} &lt; 0 ? red-text : blue-text">
+                        <th>Total</th>
+                        <td th:text="'$' + ${contextSummary.totalCashflow}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-4 text-center">
+            <h4>Batches Brewed</h4>
+            <table class="table rounded-bg gray-bg">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                    <tr th:each="entry: ${contextSummary.batches}">
+                        <td th:text="${entry.key}"></td>
+                        <td th:text="${entry.value}"></td>
+                    </tr>
+                    <tr>
+                        <td>TOTAL</td>
+                        <td th:text="${contextSummary.numberOfBatches}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-4 text-center">
+            <h4>Sales</h4>
+            <table class="table table-responsive rounded-bg gray-bg">
+                <tbody>
                 <tr class="blue-text">
-                    <th>Incoming</th>
-                    <td th:text="'$' + ${contextSummary.cashIn}"></td>
+                    <th>Potential Sales</th>
+                    <td th:text="${contextSummary.potentialSales}"></td>
+                </tr>
+                <tr class="blue-text">
+                    <th>Fulfilled</th>
+                    <td th:text="${contextSummary.fulfilledSales}"></td>
                 </tr>
                 <tr class="red-text">
-                    <th>Outgoing</th>
-                    <td th:text="'$' + ${contextSummary.cashOut}"></td>
-                </tr>
-                <tr th:classappend="${contextSummary.totalCashflow} &lt; 0 ? red-text : blue-text">
-                    <th>Total</th>
-                    <td th:text="'$' + ${contextSummary.totalCashflow}"></td>
+                    <th>Unfulfilled</th>
+                    <td th:text="${contextSummary.unfulfilledSales}"></td>
                 </tr>
                 </tbody>
             </table>
-
         </div>
     </div>
 

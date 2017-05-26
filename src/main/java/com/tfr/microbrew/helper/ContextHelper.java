@@ -6,7 +6,6 @@ import com.google.common.io.Resources;
 import com.tfr.microbrew.model.Context;
 import com.tfr.microbrew.model.ContextSummary;
 import org.apache.commons.io.FilenameUtils;
-import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -91,7 +90,7 @@ public class ContextHelper {
             Collections.sort(files);
 
             contextSummary = new ContextSummary();
-            contextSummary.setStart(LocalDate.parse(FilenameUtils.getBaseName(files.get(0).getName())));
+            contextSummary.setStartDate(FilenameUtils.getBaseName(files.get(0).getName()));
 
             for(int i=0; i<files.size(); i++) {
                 URL url = Paths.get("logs","context", contextId, files.get(i).getName()).toUri().toURL();
@@ -101,7 +100,7 @@ public class ContextHelper {
                 contextSummary.addContext(context);
 
                 if(i == files.size()-1) {
-                    contextSummary.setEnd(LocalDate.parse(FilenameUtils.getBaseName(files.get(i).getName())));
+                    contextSummary.setEndDate(FilenameUtils.getBaseName(files.get(i).getName()));
                 }
             }
 

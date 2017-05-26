@@ -25,6 +25,7 @@
                                 <span th:text="'Date: ' + ${currentDate}"></span>
                                 <a th:class="${hideNextArrow} ? hidden" th:href="@{'/dayView/' + ${contextId} + '/' + ${nextDate}}"><i class="fa fa-forward" aria-hidden="true"></i></a>
                             </h3>
+                            <a th:text="Summary" th:href="'/microbrew/' + ${contextId} + '/summary'"></a>
                         </div>
                     </div>
                 </div>
