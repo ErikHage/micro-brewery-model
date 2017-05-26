@@ -4,6 +4,7 @@ import com.tfr.microbrew.config.Routes;
 import com.tfr.microbrew.config.Views;
 import com.tfr.microbrew.helper.ContextHelper;
 import com.tfr.microbrew.model.Context;
+import com.tfr.microbrew.model.ContextSummary;
 import com.tfr.microbrew.model.ViewContext;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -40,6 +41,26 @@ public class ViewController {
         model.addAttribute("contextIds", contextIds);
 
         return Views.INDEX_TEMPLATE;
+    }
+
+    @RequestMapping(value = Routes.CONTEXT_SUMMARY,
+            method = RequestMethod.GET)
+    public String contextSummary(Model model,
+                               @PathVariable("contextId") String contextId) {
+        ContextSummary contextSummary;
+
+        try {
+            contextSummary = ContextHelper.getContextSummary(contextId);
+        } catch (FileNotFoundException e) {
+            String message = "Invalid Context: " + contextId;
+            model.addAttribute("message", message);
+            return Views.ERROR_PAGE;
+        }
+
+        model.addAttribute("contextId", contextId);
+        model.addAttribute("contextSummary", contextSummary);
+
+        return Views.CONTEXT_SUMMARY_TEMPLATE;
     }
 
     @RequestMapping(value = Routes.DAY_VIEW_START,

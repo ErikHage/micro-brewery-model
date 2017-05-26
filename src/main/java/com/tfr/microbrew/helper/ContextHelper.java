@@ -4,6 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.tfr.microbrew.model.Context;
+import com.tfr.microbrew.model.ContextSummary;
+import org.apache.commons.io.FilenameUtils;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +33,8 @@ public class ContextHelper {
 
     private static final String CONTEXT_DIRECTORY = "logs/context";
     private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    private static final DateTimeFormatter dateFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
 
     public static List<String> getContextIds() {
         List<String> contextIds;
@@ -75,6 +82,34 @@ public class ContextHelper {
             throw new FileNotFoundException(String.format("Error getting path to context [%s] file [%s]", contextId, filename));
         }
         return context;
+    }
+
+    public static ContextSummary getContextSummary(String contextId) throws FileNotFoundException {
+        ContextSummary contextSummary;
+        try {
+            List<File> files = Arrays.asList(new File(CONTEXT_DIRECTORY + "/" + contextId).listFiles());
+            Collections.sort(files);
+
+            contextSummary = new ContextSummary();
+            contextSummary.setStart(LocalDate.parse(FilenameUtils.getBaseName(files.get(0).getName())));
+
+            for(int i=0; i<files.size(); i++) {
+                URL url = Paths.get("logs","context", contextId, files.get(i).getName()).toUri().toURL();
+                String json = Resources.toString(url, Charsets.UTF_8);
+                Context context = objectMapper.readValue(json, Context.class);
+
+                contextSummary.addContext(context);
+
+                if(i == files.size()-1) {
+                    contextSummary.setEnd(LocalDate.parse(FilenameUtils.getBaseName(files.get(i).getName())));
+                }
+            }
+
+        } catch (IOException e) {
+            logger.error(String.format("Error getting path to context [%s]", contextId), e);
+            throw new FileNotFoundException(String.format("Error getting path to context [%s]", contextId));
+        }
+        return contextSummary;
     }
 
 

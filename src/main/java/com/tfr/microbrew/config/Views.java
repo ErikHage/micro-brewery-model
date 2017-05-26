@@ -8,6 +8,7 @@ public interface Views {
 
     String INDEX_TEMPLATE = "index";
 
+    String CONTEXT_SUMMARY_TEMPLATE = "contextSummary";
     String DAY_VIEW_TEMPLATE = "dayView";
 
     String ERROR_PAGE = "error";

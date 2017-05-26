@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/imports :: imports"></div>
+    <div th:replace="fragments/imports :: style-custom"></div>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:text="'Overview for context ' + ${contextId}"></title>
+</head>
+<body class="container-fluid">
+
+    <div th:replace="fragments/nav :: nav-header"></div>
+
+    <div class="row">
+        <div class="col-xs-12">
+
+            <h4>Cashflows</h4>
+            <table class="table table-responsive rounded-bg gray-bg">
+                <tbody>
+                <tr class="blue-text">
+                    <th>Incoming</th>
+                    <td th:text="'$' + ${contextSummary.cashIn}"></td>
+                </tr>
+                <tr class="red-text">
+                    <th>Outgoing</th>
+                    <td th:text="'$' + ${contextSummary.cashOut}"></td>
+                </tr>
+                <tr th:classappend="${contextSummary.totalCashflow} &lt; 0 ? red-text : blue-text">
+                    <th>Total</th>
+                    <td th:text="'$' + ${contextSummary.totalCashflow}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</body>
+<footer>
+    <div th:replace="fragments/footer :: footer"></div>
+</footer>
+</html>

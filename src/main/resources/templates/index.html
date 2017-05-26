@@ -19,7 +19,8 @@
                 </div>
                 <hr />
                 <div class="text-center rounded-background" th:each="contextId : ${contextIds}" >
-                    <a th:text="${contextId}" th:href="'/microbrew/dayView/' + ${contextId}"></a>
+                    <a th:text="${contextId}" th:href="'/microbrew/dayView/' + ${contextId}"></a> |
+                    <a th:text="Summary" th:href="'/microbrew/' + ${contextId} + '/summary'"></a>
                     <br />
                 </div>
             </div>
