@@ -28,6 +28,9 @@ public class ContextSummary {
     private long fulfilledSales;
     private long unfulfilledSales;
 
+    private Map<String, Integer> salesByProduct;
+    private Map<String, Double> volumeByProduct;
+
     public ContextSummary() {
         this.cashIn = 0;
         this.cashOut = 0;
@@ -38,6 +41,8 @@ public class ContextSummary {
         this.potentialSales = 0;
         this.fulfilledSales = 0;
         this.unfulfilledSales = 0;
+        this.salesByProduct = new HashMap<>();
+        this.volumeByProduct = new HashMap<>();
     }
 
     public void addContext(Context context) {
@@ -69,6 +74,21 @@ public class ContextSummary {
                     } else {
                         batches.put(name, 1);
                     }
+                });
+
+        context.getSales().stream()
+                .filter(Sale::isFulfilled)
+                .forEach(s -> {
+                    salesByProduct.putIfAbsent(s.getProductName(), 0);
+                    salesByProduct.put(s.getProductName(), salesByProduct.get(s.getProductName())+1);
+                });
+
+        context.getSales().stream()
+                .filter(Sale::isFulfilled)
+                .forEach(s -> {
+                    volumeByProduct.putIfAbsent(s.getProductName(), 0.0);
+                    volumeByProduct.put(s.getProductName(),
+                            volumeByProduct.get(s.getProductName())+s.getBeverageProduct().getVolume());
                 });
 
         numberOfBatches = batches.entrySet().stream()
@@ -172,5 +192,21 @@ public class ContextSummary {
 
     public void setUnfulfilledSales(long unfulfilledSales) {
         this.unfulfilledSales = unfulfilledSales;
+    }
+
+    public Map<String, Integer> getSalesByProduct() {
+        return salesByProduct;
+    }
+
+    public void setSalesByProduct(Map<String, Integer> salesByProduct) {
+        this.salesByProduct = salesByProduct;
+    }
+
+    public Map<String, Double> getVolumeByProduct() {
+        return volumeByProduct;
+    }
+
+    public void setVolumeByProduct(Map<String, Double> volumeByProduct) {
+        this.volumeByProduct = volumeByProduct;
     }
 }

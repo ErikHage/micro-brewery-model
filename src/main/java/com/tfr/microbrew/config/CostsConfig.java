@@ -23,11 +23,10 @@ public class CostsConfig {
                 new FixedCost("Insurance", 333.00, Sets.newHashSet(1)),
                 new FixedCost("Internet/Phone/TV", 100.0, Sets.newHashSet(15)),
                 new FixedCost("Gas/Electric", 1200.0, Sets.newHashSet(15)),
-                new FixedCost("Logistics", 200.0, Sets.newHashSet(15)),
+                new FixedCost("Logistics", 200.0, Sets.newHashSet(1)),
                 new FixedCost("Water/Sewer", 200.0, Sets.newHashSet(15)),
                 new FixedCost("Accountant", 250.0, Sets.newHashSet(1)),
                 new FixedCost("Loan/Credit Payment", 1200.0, Sets.newHashSet(22))
         );
     }
-
 }
