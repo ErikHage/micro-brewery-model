@@ -30,6 +30,7 @@ public class ContextSummary {
 
     private Map<String, Integer> salesByProduct;
     private Map<String, Double> volumeByProduct;
+    private Map<String, Integer> salesByVolume;
 
     public ContextSummary() {
         this.cashIn = 0;
@@ -43,6 +44,7 @@ public class ContextSummary {
         this.unfulfilledSales = 0;
         this.salesByProduct = new HashMap<>();
         this.volumeByProduct = new HashMap<>();
+        this.salesByVolume = new HashMap<>();
     }
 
     public void addContext(Context context) {
@@ -89,6 +91,15 @@ public class ContextSummary {
                     volumeByProduct.putIfAbsent(s.getProductName(), 0.0);
                     volumeByProduct.put(s.getProductName(),
                             volumeByProduct.get(s.getProductName())+s.getBeverageProduct().getVolume());
+                });
+
+        context.getSales().stream()
+                .filter(Sale::isFulfilled)
+                .forEach(s -> {
+                    String beverageVolume = s.getBeverageProduct().getBeverageVolume().name();
+                    salesByVolume.putIfAbsent(beverageVolume, 0);
+                    salesByVolume.put(beverageVolume,
+                            salesByVolume.get(beverageVolume)+1);
                 });
 
         numberOfBatches = batches.entrySet().stream()
@@ -208,5 +219,13 @@ public class ContextSummary {
 
     public void setVolumeByProduct(Map<String, Double> volumeByProduct) {
         this.volumeByProduct = volumeByProduct;
+    }
+
+    public Map<String, Integer> getSalesByVolume() {
+        return salesByVolume;
+    }
+
+    public void setSalesByVolume(Map<String, Integer> salesByVolume) {
+        this.salesByVolume = salesByVolume;
     }
 }
