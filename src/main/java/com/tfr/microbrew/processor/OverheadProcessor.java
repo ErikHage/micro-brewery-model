@@ -3,13 +3,16 @@ package com.tfr.microbrew.processor;
 import com.google.common.collect.Sets;
 import com.tfr.microbrew.config.DayOfWeek;
 import com.tfr.microbrew.model.Cashflow;
+import com.tfr.microbrew.model.FixedCost;
 import com.tfr.microbrew.service.CashflowService;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,27 +26,25 @@ public class OverheadProcessor implements Processor {
 
     private final CashflowService cashflowService;
 
+    private final List<FixedCost> fixedCosts;
+
     @Autowired
-    public OverheadProcessor(CashflowService cashflowService) {
+    public OverheadProcessor(CashflowService cashflowService,
+                             @Qualifier("FixedCosts") List<FixedCost> fixedCosts) {
         this.cashflowService = cashflowService;
+        this.fixedCosts = fixedCosts;
     }
 
     @Override
     public void process(LocalDate date) {
         int dayOfMonth = date.getDayOfMonth();
 
-        if(dayOfMonth == 1) {
-            logger.debug("Rent on first of the month");
-            cashflowService.saveCashflow(new Cashflow(date, -5000.00));
-
-            logger.debug("Other monthly costs");
-            cashflowService.saveCashflow(new Cashflow(date, -2000.00));
-        }
-
-        if(dayOfMonth == 15) {
-            logger.debug("Utilities due on 15th of the month");
-            cashflowService.saveCashflow(new Cashflow(date, -2000.00));
-        }
+        fixedCosts.stream()
+                .filter(fc -> fc.getDaysOfMonth().contains(dayOfMonth))
+                .forEach(fc -> {
+                    logger.debug(String.format("Fixed cost of %s for %s", fc.getCost(), fc.getDescription()));
+                    cashflowService.saveCashflow(new Cashflow(date, (-1)*fc.getCost()));
+                });
     }
 
     @Override
