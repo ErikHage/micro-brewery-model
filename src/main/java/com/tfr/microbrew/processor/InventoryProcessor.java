@@ -104,7 +104,7 @@ public class InventoryProcessor implements Processor {
         itemsToReorder.forEach(i -> {
             double cost = i.getReorderQuantity() * i.getUnitPrice();
             i.setQuantity(i.getQuantity() + i.getReorderQuantity());
-            cashflowService.saveCashflow(new Cashflow(date, (-1)*cost));
+            cashflowService.saveCashflow(new Cashflow(date, (-1)*cost, "Inventory"));
         });
         itemsToReorder.clear();
     }

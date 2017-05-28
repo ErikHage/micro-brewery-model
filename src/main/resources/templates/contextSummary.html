@@ -26,7 +26,7 @@
 
     <div class="row">
         <div class="col-xs-4 text-center">
-            <h4>Cashflows</h4>
+            <h3>Cashflows</h3>
             <table class="table table-responsive rounded-bg gray-bg">
                 <tbody>
                     <tr class="blue-text">
@@ -45,7 +45,7 @@
             </table>
         </div>
         <div class="col-xs-4 text-center">
-            <h4>Batches Brewed</h4>
+            <h3>Batches Brewed</h3>
             <table class="table rounded-bg gray-bg">
                 <thead>
                     <tr>
@@ -66,7 +66,7 @@
             </table>
         </div>
         <div class="col-xs-4 text-center">
-            <h4>Sales</h4>
+            <h3>Sales</h3>
             <table class="table table-responsive rounded-bg gray-bg">
                 <tbody>
                 <tr class="blue-text">
@@ -83,6 +83,70 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <h3>Cashflow Breakdown</h3>
+        <div class="col-xs-4">
+            <h4>Cashflows By Type</h4>
+            <table class="table rounded-bg gray-bg">
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Cashflow</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entry: ${contextSummary.cashflowsByDescription}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:classappend="${entry.value} &lt; 0 ? red-text : blue-text"
+                        th:text="'$' + ${entry.value}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-4">
+            <h4>Cashflows by Product</h4>
+            <table class="table rounded-bg gray-bg">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Cashflow</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entry: ${contextSummary.cashflowsByProduct}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:classappend="${entry.value} &lt; 0 ? red-text : blue-text"
+                        th:text="'$' + ${entry.value}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-4">
+            <h4>Cashflows by Month</h4>
+            <table class="table rounded-bg gray-bg">
+                <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Cashflow</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entry: ${contextSummary.cashflowsByMonth}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:classappend="${entry.value} &lt; 0 ? red-text : blue-text"
+                        th:text="'$' + ${entry.value}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <h3>Sales Breakdown</h3>
+        <div class="col-xs-4">
             <h4>Sales By Product</h4>
             <table class="table rounded-bg gray-bg">
                 <thead>
@@ -92,12 +156,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="entry: ${contextSummary.salesByProduct}">
-                        <td th:text="${entry.key}"></td>
-                        <td th:text="${entry.value}"></td>
-                    </tr>
+                <tr th:each="entry: ${contextSummary.salesByProduct}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="col-xs-4">
             <h4>Sales Volumes by Product</h4>
             <table class="table rounded-bg gray-bg">
                 <thead>
@@ -113,7 +179,9 @@
                 </tr>
                 </tbody>
             </table>
-            <h4>Sales by Volumes</h4>
+        </div>
+        <div class="col-xs-4">
+            <h4>Sales by Volume</h4>
             <table class="table rounded-bg gray-bg">
                 <thead>
                 <tr>

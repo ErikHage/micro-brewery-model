@@ -43,7 +43,7 @@ public class OverheadProcessor implements Processor {
                 .filter(fc -> fc.getDaysOfMonth().contains(dayOfMonth))
                 .forEach(fc -> {
                     logger.debug(String.format("Fixed cost of %s for %s", fc.getCost(), fc.getDescription()));
-                    cashflowService.saveCashflow(new Cashflow(date, (-1)*fc.getCost()));
+                    cashflowService.saveCashflow(new Cashflow(date, (-1)*fc.getCost(), fc.getDescription()));
                 });
     }
 

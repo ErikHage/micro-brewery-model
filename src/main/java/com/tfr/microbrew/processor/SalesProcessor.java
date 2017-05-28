@@ -67,7 +67,7 @@ public class SalesProcessor implements Processor {
                 unfulfilledSales.getAndIncrement();
             }
             salesService.performSale(s);
-            cashflowService.saveCashflow(new Cashflow(date, s.getPrice()));
+            cashflowService.saveCashflow(new Cashflow(date, s.getPrice(), "Beer Sale", s.getProductName()));
         });
 
         logger.debug(String.format("Sales Today: %s [%s fulfilled | %s unfulfilled]",
