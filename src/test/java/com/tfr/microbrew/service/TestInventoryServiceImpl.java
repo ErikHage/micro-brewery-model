@@ -1,31 +1,22 @@
 package com.tfr.microbrew.service;
 
+import com.tfr.microbrew.MicroBreweryModelApplication;
 import com.tfr.microbrew.exception.InventoryException;
 import com.tfr.microbrew.model.InventoryItem;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Tests for InventoryService
- *
- * Created by Erik on 4/22/2017.
- */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = MicroBreweryModelApplication.class)
 public class TestInventoryServiceImpl {
 
     @Autowired
     private InventoryService inventoryService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         inventoryService.deleteItem("TestItem1");
         inventoryService.deleteItem("TestItem2");
@@ -45,10 +36,13 @@ public class TestInventoryServiceImpl {
         assertEquals(250.0, inventoryItem.getReorderQuantity(), 0.01);
     }
 
-    @Test(expected = InventoryException.class)
+    @Test
     public void testAdd_ExpectException() {
         InventoryItem inventoryItem1 = new InventoryItem("TestItem1", "",100.0, 50.0, 250.0);
-        inventoryService.addItem(inventoryItem1);
+
+        assertThrows(InventoryException.class, () -> {
+            inventoryService.addItem(inventoryItem1);
+        });
     }
 
     @Test
@@ -69,9 +63,11 @@ public class TestInventoryServiceImpl {
         assertEquals(90.0, inventoryItem.getQuantity(), 0.01);
     }
 
-    @Test(expected = InventoryException.class)
+    @Test
     public void testUpdateQuantity_ExpectException() {
-        inventoryService.updateQuantity("TestItem3", 10.0);
+        assertThrows(InventoryException.class, () -> {
+            inventoryService.updateQuantity("TestItem3", 10.0);
+        });
     }
 
     @Test

@@ -17,11 +17,6 @@ import java.util.Map;
 
 import static com.tfr.microbrew.config.BeverageVolume.*;
 
-/**
- *
- *
- * Created by Erik on 4/24/2017.
- */
 @Configuration
 public class SalesConfig {
 

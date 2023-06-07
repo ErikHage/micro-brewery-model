@@ -1,23 +1,16 @@
 package com.tfr.microbrew.config;
 
+import com.tfr.microbrew.MicroBreweryModelApplication;
 import com.tfr.microbrew.model.InventoryItem;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.Set;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-/**
- * Tests for InventoryConfig
- *
- * Created by Erik on 5/3/2017.
- */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = MicroBreweryModelApplication.class)
 public class TestInventoryConfig {
 
     @Resource(name = "InventoryItems")

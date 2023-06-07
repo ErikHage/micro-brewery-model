@@ -1,26 +1,19 @@
 package com.tfr.microbrew.controller;
 
+import com.tfr.microbrew.MicroBreweryModelApplication;
 import com.tfr.microbrew.config.Constants;
 import com.tfr.microbrew.model.InitialParameters;
 import com.tfr.microbrew.model.InventoryItem;
 import org.joda.time.LocalDate;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.Set;
 
-/**
- * Tests for ModelController
- *
- * Created by Erik on 4/22/2017.
- */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = MicroBreweryModelApplication.class)
 public class TestModelController {
 
     @Autowired

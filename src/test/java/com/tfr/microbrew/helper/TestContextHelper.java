@@ -1,19 +1,13 @@
 package com.tfr.microbrew.helper;
 
 import com.tfr.microbrew.model.Context;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-/**
- *
- * Created by Erik Hage on 5/13/2017.
- */
 public class TestContextHelper {
 
     @Test

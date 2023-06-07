@@ -1,25 +1,16 @@
 package com.tfr.microbrew.config;
 
+import com.tfr.microbrew.MicroBreweryModelApplication;
 import com.tfr.microbrew.model.Recipe;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-/**
- *
- * Created by Erik Hage on 5/4/2017.
- */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = MicroBreweryModelApplication.class)
 public class TestRecipeConfig {
 
     @Resource(name = "RecipesList")

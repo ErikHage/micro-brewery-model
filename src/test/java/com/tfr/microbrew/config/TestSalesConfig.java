@@ -1,25 +1,19 @@
 package com.tfr.microbrew.config;
 
+import com.tfr.microbrew.MicroBreweryModelApplication;
 import com.tfr.microbrew.model.BeverageProduct;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-/**
- *
- * Created by Erik Hage on 5/6/2017.
- */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = MicroBreweryModelApplication.class)
 public class TestSalesConfig {
 
     @Autowired
